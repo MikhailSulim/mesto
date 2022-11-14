@@ -1,0 +1,18 @@
+.profile__info {
+  padding-left: 30px;
+  display: grid;
+  grid-template-columns: 294px 1fr;
+  align-items: center;
+}
+
+@media screen and (max-width: 767px) {   /* TODO сделать центрирование под фото */
+  .profile__info {
+    margin-bottom: 36px;
+    padding-left: 0;
+    /* grid-template-columns: max-content auto ; */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+  }
+}
