@@ -12,8 +12,6 @@
 /* add-button */
 @import url('../blocks/add-button/add-button.css');
 
-
-
 /* profile */
 @import url('../blocks/profile/profile.css');
 @import url('../blocks/profile/__avatar/profile__avatar.css');
@@ -22,8 +20,23 @@
 @import url('../blocks/profile/__name/profile__name.css');
 @import url('../blocks/profile/__subtitle/profile__subtitle.css');
 
+/* elements and element */
+@import url('../blocks/elements/elements.css');
+@import url('../blocks/element/element.css');
+@import url('../blocks/element/__img/element__img.css');
+@import url('../blocks/element/__like/element__like.css');
+@import url('../blocks/element/__title/element__title.css');
 
-@import url('');
-@import url('');
-@import url('');
-@import url('');
+/* footer */
+@import url('../blocks/footer/footer.css');
+@import url('../blocks/footer/__copyright/footer__copyright.css');
+
+/* popup */
+@import url('../blocks/popup/popup.css');
+@import url('../blocks/popup/__close/popup__close.css');
+@import url('../blocks/popup/__container/popup__container.css');
+@import url('../blocks/popup/__content/popup__content.css');
+@import url('../blocks/popup/__field-name/popup__field-name.css');
+@import url('../blocks/popup/__field-subtitle/popup__field-subtitle.css');
+@import url('../blocks/popup/__save/popup__save.css');
+@import url('../blocks/popup/__title/popup__title.css');
