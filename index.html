@@ -15,77 +15,103 @@
   <body class="page">
     <header class="header">
       <div class="header__logo"></div>
-      <!-- <hr class="header__line"> -->
     </header>
 
     <main class="content">
+
       <section class="profile">
-        <div class="profile__avatar"></div>
-        <div class="profile__info">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <div class="profile__edit-button"></div>
-          <h2 class="profile__subtitle">Исследователь океана</h2>
+        <div class="profile__container">
+          <div class="profile__avatar"></div>
+          <div class="profile__info">
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
+            <button class="profile__edit-button"></button>
+            <p class="profile__subtitle">Исследователь океана</p>
+          </div>
         </div>
         <button class="add-button"></button>
       </section>
 
       <section class="elements">
-        <div class="element">
-          <img
-            src="./images/karachaevo.jpg"
-            alt="пейзаж Карачаево-Черкессии."
-            class="element__img"
-          />
-          <h2 class="element__title">Карачаевск</h2>
-          <div class="element__like"></div>
-        </div>
-        <!-- TODO сделать нормальные подписи -->
-        <div class="element">
-          <img
-            src="./images/elbrus.jpg"
-            alt="Гора Эльбрус"
-            class="element__img"
-          />
-          <h2 class="element__title">Гора Эльбрус</h2>
-          <div class="element__like"></div>
-        </div>
-        <div class="element">
-          <img src="./images/dombay.jpg" alt="Домбай" class="element__img" />
-          <h2 class="element__title">Домбай</h2>
-          <div class="element__like"></div>
-        </div>
-        <div class="element">
-          <img src="./images/elbrus.jpg" alt="" class="element__img" />
-          <h2 class="element__title">Гора Эльбрус</h2>
-          <div class="element__like"></div>
-        </div>
-        <div class="element">
-          <img src="./images/dombay.jpg" alt="" class="element__img" />
-          <h2 class="element__title">Домбай</h2>
-          <div class="element__like"></div>
-        </div>
-        <div class="element">
-          <img src="./images/karachaevo.jpg" alt="" class="element__img" />
-          <h2 class="element__title">Карачаево-Черкесия</h2>
-          <div class="element__like"></div>
-        </div>
+        <ui class="elements__container">
+          <li class="element">
+            <img
+              src="./images/ostafievo.jpg"
+              alt="Вид на усадьбу Остафьево на закате."
+              class="element__img"
+            />
+            <h2 class="element__title">Остафьево</h2>
+            <div class="element__like"></div>
+          </li>
+
+          <li class="element">
+            <img
+              src="./images/lobnya.jpeg"
+              alt="Церковь в Киово, Лобня"
+              class="element__img"
+            />
+            <h2 class="element__title">Лобня</h2>
+            <div class="element__like"></div>
+          </li>
+
+          <li class="element">
+            <img
+              src="./images/kolomna.jpg"
+              alt="Вид на башню коломенского кремля и памятник Дмитрию Донскому в лучах заходящего солнца"
+              class="element__img"
+            />
+            <h2 class="element__title">Коломна</h2>
+            <div class="element__like"></div>
+          </li>
+
+          <li class="element">
+            <img
+              src="./images/stpetersburg.jpg"
+              alt="Вид с высоты на Неву, Адмиралтейство и Петропавловскую крепость в Санкт-Петербурге"
+              class="element__img"
+            />
+            <h2 class="element__title">Санкт-Петербург</h2>
+            <div class="element__like"></div>
+          </li>
+
+          <li class="element">
+            <img
+              src="./images/moscow.jpg"
+              alt="Вид на московский кремль и Москва-реку"
+              class="element__img"
+            />
+            <h2 class="element__title">Москва</h2>
+            <div class="element__like"></div>
+          </li>
+
+          <li class="element">
+            <img
+              src="./images/shlisselburg.jpg"
+              alt="Вид с реки на крепость Орешек в Шлиссельбурге"
+              class="element__img"
+            />
+            <h2 class="element__title">Шлиссельбург</h2>
+            <div class="element__like"></div>
+          </li>
+        </ui>
       </section>
     </main>
 
     <footer class="footer">
-      <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+      <p class="footer__copyright">&copy; 2022 Михаил Сулим</p>
     </footer>
     <!-- popup -->
     <section class="popup">
       <div class="popup__container">
         <button class="popup__close"></button>
-        <div class="popup__content">
+        <form class="popup__content">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <p class="popup__field-name">Жак-Ив Кусто</p>
-          <p class="popup__field-subtitle">Исследователь океана</p>
+          <input type="text" class="popup__input popup__name"/>
+          <input type="text" class="popup__input popup__subtitle"/>
           <button class="popup__save">Сохранить</button>
-        </div>
+        </form>
       </div>
     </section>
+
+    <script src="./scripts/index.js"></script>
   </body>
 </html>

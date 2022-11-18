@@ -1,4 +1,5 @@
 .add-button {
+  align-self: center;
   width: 150px;
   height: 50px;
   background-color: #000;
@@ -10,7 +11,8 @@
   background-repeat: no-repeat;
   background-position: center;
   transition: opacity 0.5s;
-  margin-left: auto;
+  margin: 0;
+  padding: 0;
 }
 
 .add-button:hover {
@@ -18,10 +20,16 @@
   cursor: pointer;
 }
 
-
-@media screen and (max-width: 767px ) {
-.add-button {
-  margin: 0 auto;
-  width: 100%;
+@media screen and (max-width: 880px) {
+  .add-button {
+    width: 282px;
+    background-size: 16px;
+  }
 }
+
+@media screen and (max-width: 570px) {
+  .add-button {
+    margin: 0 auto;
+    width: 282px;
+  }
 }

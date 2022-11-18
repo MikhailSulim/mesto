@@ -1,18 +1,11 @@
 .popup {
-  display: block;
-  /* margin: 0 auto; */
+  display: none;
   position: fixed;
-  /* align-self: center; */
-  /* align-self: center; */
-  /* justify-self: center; */
-  /* top: calc(50vh - 215px); */
-  /* left: calc(50vw - 115px); */
-  background: rgba(0, 0, 0, 0.5);
-  /* TODO разобраться с выравниванием по центру */
-  /* TODO затемнение всех неактивной части */
-  /* position: absolute; */
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 10px;
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }

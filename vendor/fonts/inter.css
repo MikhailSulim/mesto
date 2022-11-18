@@ -1,4 +1,4 @@
-/* @font-face {
+@font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
@@ -23,22 +23,4 @@
   font-display: swap;
   src: url("./Inter-Black.woff2") format("woff2"),
     url("./Inter-Black.woff") format("woff");
-} */
-
-/* -------------------------------------------------------
-Variable font.
-Usage:
-
-  html { font-family: 'Inter', sans-serif; }
-  @supports (font-variation-settings: normal) {
-    html { font-family: 'Inter var', sans-serif; }
-  }
-*/
-@font-face {
-  font-family: "Inter var";
-  font-weight: 100 900;
-  font-display: swap;
-  font-style: normal;
-  font-named-instance: "Regular";
-  src: url("./Inter-roman.var.woff2") format("woff2");
 }

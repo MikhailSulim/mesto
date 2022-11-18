@@ -1,18 +1,21 @@
 .profile__info {
-  padding-left: 30px;
+  align-self: center;
+  column-gap: 18px;
   display: grid;
-  grid-template-columns: 294px 1fr;
-  align-items: center;
+  grid-template-columns: 1fr 24px;
+  margin: 0;
+  padding: 0;
 }
 
-@media screen and (max-width: 767px) {   /* TODO сделать центрирование под фото */
+@media screen and (max-width: 880px) {
   .profile__info {
     margin-bottom: 36px;
-    padding-left: 0;
-    /* grid-template-columns: max-content auto ; */
-    display: flex;
-    flex-direction: column;
-    position: relative;
+  }
+}
 
+@media screen and (max-width: 570px) {
+  .profile__info {
+    grid-template-columns: 1fr 18px;
+    margin: 0 auto 36px;
   }
 }

@@ -9,3 +9,10 @@
   border-radius: 10px;
   position: relative;
 }
+
+@media screen and (max-width: 880px) {
+  .element {
+    justify-self: center;
+    align-self: center;
+  }
+}

@@ -10,9 +10,18 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  transition: opacity .5s;
+  transition: opacity 0.5s;
 }
 
-.popu__close:hover {
+.popup__close:hover {
   opacity: 0.6;
+}
+
+@media screen and (max-width: 570px) {
+  .popup__close {
+    height: 20px;
+    right: 0;
+    top: -36px;
+    width: 20px;
+  }
 }
