@@ -3,12 +3,18 @@
   min-width: 320px;
   width: 100%;
   padding-bottom: 66px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  grid-gap: 20px 17px;
+  list-style: none;
 }
 
 @media screen and (max-width: 880px) {
   .elements {
     max-width: 585px;
     margin: 0 auto;
+    /* max-width: 585px; */
+    /* margin: 0 auto; */
   }
 }
 
