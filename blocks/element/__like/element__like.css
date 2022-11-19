@@ -1,7 +1,4 @@
 .element__like {
-  position: absolute;
-  left: 240px;
-  top: 312px;
   background-image: url("../../../images/like_disable.svg");
   background-repeat: no-repeat;
   color: #000;

@@ -5,8 +5,8 @@
   background-image: url("../../../images/Close_Icon.svg");
   background-repeat: no-repeat;
   background-size: contain;
-  right: calc(-8px - 32px);
-  top: calc(-8px - 32px);
+  left: calc(50% + 430px / 2 + 8px);
+  top: calc(50% - 330px / 2 - 8px - 32px);
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -20,8 +20,8 @@
 @media screen and (max-width: 570px) {
   .popup__close {
     height: 20px;
-    right: 0;
-    top: -36px;
+    left: calc(50% + 282px / 2 - 20px);
+    top: calc(50% - 322px / 2 - 20px - 16px);
     width: 20px;
   }
 }
