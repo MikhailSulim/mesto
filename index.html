@@ -23,11 +23,11 @@
           <div class="profile__avatar"></div>
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__edit-button"></button>
+            <button class="profile__edit-button" type="submit"></button>
             <p class="profile__subtitle">Исследователь океана</p>
           </div>
         </div>
-        <button class="add-button"></button>
+        <button class="add-button" type="submit"></button>
       </section>
 
       <section class="elements">
@@ -40,7 +40,7 @@
             />
             <div class="element__line-container">
               <h2 class="element__title">Остафьево</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="submit"></button>
             </div>
           </li>
 
@@ -52,7 +52,7 @@
             />
             <div class="element__line-container">
               <h2 class="element__title">Лобня</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="submit"></button>
             </div>
           </li>
 
@@ -64,7 +64,7 @@
             />
             <div class="element__line-container">
               <h2 class="element__title">Коломна</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="submit"></button>
             </div>
           </li>
 
@@ -76,7 +76,7 @@
             />
             <div class="element__line-container">
               <h2 class="element__title">Санкт-Петербург</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="submit"></button>
             </div>
           </li>
 
@@ -88,7 +88,7 @@
             />
             <div class="element__line-container">
               <h2 class="element__title">Москва</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="submit"></button>
             </div>
           </li>
 
@@ -100,7 +100,7 @@
             />
             <div class="element__line-container">
               <h2 class="element__title">Шлиссельбург</h2>
-              <div class="element__like"></div>
+              <button class="element__like" type="submit"></button>
             </div>
           </li>
         </ul>
@@ -111,17 +111,17 @@
       <p class="footer__copyright">&copy; 2022 Михаил Сулим</p>
     </footer>
     <!-- popup -->
-    <section class="popup">
+    <div class="popup">
       <div class="popup__container">
-        <button class="popup__close"></button>
+        <button class="popup__close" type="submit"></button>
         <form class="popup__content">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input type="text" class="popup__input popup__name" />
-          <input type="text" class="popup__input popup__subtitle" />
-          <button class="popup__save">Сохранить</button>
+          <input type="text" class="popup__input popup__input_field_name" />
+          <input type="text" class="popup__input popup__input_field_subtitle" />
+          <button class="popup__save" type="submit">Сохранить</button>
         </form>
       </div>
-    </section>
+    </div>
 
     <script src="./scripts/index.js"></script>
   </body>
