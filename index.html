@@ -32,7 +32,7 @@
 
       <section class="elements">
         <ul class="elements__container">
-          <li class="element">
+          <!-- <li class="element">
             <img
               src="./images/ostafievo.jpg"
               alt="Вид на усадьбу Остафьево на закате."
@@ -102,7 +102,7 @@
               <h2 class="element__title">Шлиссельбург</h2>
               <button class="element__like" type="button"></button>
             </div>
-          </li>
+          </li> -->
         </ul>
       </section>
     </main>
@@ -122,6 +122,29 @@
         </form>
       </div>
     </div>
+
+    <!-- <div class="popup popup_add">
+      <div class="popup__container">
+        <button class="popup__close" type="button"></button>
+        <form class="popup__content">
+          <h2 class="popup__title">Новое место</h2>
+          <input type="text" class="popup__input popup__input_field_place" />
+          <input type="text" class="popup__input popup__input_field_link" />
+          <button class="popup__save" type="submit">Создать</button>
+        </form>
+      </div>
+    </div> -->
+
+    <template id="card-template">
+      <li class="element">
+        <img src="" alt="" class="element__img" />
+        <button class="element__delete" type="button"></button>
+        <div class="element__line-container">
+          <h2 class="element__title"></h2>
+          <button class="element__like" type="button"></button>
+        </div>
+      </li>
+    </template>
 
     <script src="./scripts/index.js"></script>
   </body>
