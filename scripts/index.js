@@ -89,6 +89,10 @@ function handleLike(event) {
   event.target.closest(".element__like").classList.toggle("element__like_is-liked");
 }
 
+function handleDeleteCard(event) {
+  event.target.closest(".element").remove();
+}
+
 function createCard(item) {
   const newCard = cardTemplate.cloneNode(true);
   const cardTitle = newCard.querySelector(".element__title");
@@ -99,6 +103,10 @@ function createCard(item) {
 
   const likeButton = newCard.querySelector(".element__like");
   likeButton.addEventListener("click", handleLike);
+
+  const deleteButton = newCard.querySelector(".element__delete");
+  deleteButton.addEventListener("click", handleDeleteCard);
+
 
   return newCard;
 }
