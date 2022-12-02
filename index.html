@@ -31,110 +31,52 @@
       </section>
 
       <section class="elements">
-        <ul class="elements__container">
-          <!-- <li class="element">
-            <img
-              src="./images/ostafievo.jpg"
-              alt="Вид на усадьбу Остафьево на закате."
-              class="element__img"
-            />
-            <div class="element__line-container">
-              <h2 class="element__title">Остафьево</h2>
-              <button class="element__like" type="button"></button>
-            </div>
-          </li>
-
-          <li class="element">
-            <img
-              src="./images/lobnya.jpeg"
-              alt="Церковь в Киово, Лобня"
-              class="element__img"
-            />
-            <div class="element__line-container">
-              <h2 class="element__title">Лобня</h2>
-              <button class="element__like" type="button"></button>
-            </div>
-          </li>
-
-          <li class="element">
-            <img
-              src="./images/kolomna.jpg"
-              alt="Вид на башню коломенского кремля и памятник Дмитрию Донскому в лучах заходящего солнца"
-              class="element__img"
-            />
-            <div class="element__line-container">
-              <h2 class="element__title">Коломна</h2>
-              <button class="element__like" type="button"></button>
-            </div>
-          </li>
-
-          <li class="element">
-            <img
-              src="./images/stpetersburg.jpg"
-              alt="Вид с высоты на Неву, Адмиралтейство и Петропавловскую крепость в Санкт-Петербурге"
-              class="element__img"
-            />
-            <div class="element__line-container">
-              <h2 class="element__title">Санкт-Петербург</h2>
-              <button class="element__like" type="button"></button>
-            </div>
-          </li>
-
-          <li class="element">
-            <img
-              src="./images/moscow.jpg"
-              alt="Вид на московский кремль и Москва-реку"
-              class="element__img"
-            />
-            <div class="element__line-container">
-              <h2 class="element__title">Москва</h2>
-              <button class="element__like" type="button"></button>
-            </div>
-          </li>
-
-          <li class="element">
-            <img
-              src="./images/shlisselburg.jpg"
-              alt="Вид с реки на крепость Орешек в Шлиссельбурге"
-              class="element__img"
-            />
-            <div class="element__line-container">
-              <h2 class="element__title">Шлиссельбург</h2>
-              <button class="element__like" type="button"></button>
-            </div>
-          </li> -->
-        </ul>
+        <ul class="elements__container"></ul>
       </section>
     </main>
 
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022 Михаил Сулим</p>
     </footer>
+
+
     <!-- popup -->
-    <div class="popup">
+
+    <!-- новое описание профиля -->
+    <div class="popup popup_type_description">
       <div class="popup__container">
-        <button class="popup__close" type="button"></button>
+        <button class="popup__close popup__close_type_description" type="button"></button>
         <form class="popup__content">
           <h2 class="popup__title">Редактировать профиль</h2>
           <input type="text" class="popup__input popup__input_field_name" />
           <input type="text" class="popup__input popup__input_field_subtitle" />
-          <button class="popup__save" type="submit">Сохранить</button>
+          <button class="popup__save popup__save_type_description" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
 
-    <!-- <div class="popup popup_add">
+
+    <!-- новая карточка с фото -->
+    <div class="popup popup_type_add-card">
       <div class="popup__container">
-        <button class="popup__close" type="button"></button>
+        <button class="popup__close popup__close_type_add-card" type="button"></button>
         <form class="popup__content">
           <h2 class="popup__title">Новое место</h2>
-          <input type="text" class="popup__input popup__input_field_place" />
-          <input type="text" class="popup__input popup__input_field_link" />
-          <button class="popup__save" type="submit">Создать</button>
+          <input type="text" class="popup__input popup__input_field_place" placeholder="Название"/>
+          <input type="text" class="popup__input popup__input_field_link" placeholder="Ссылка на картинку"/>
+          <button class="popup__save popup__save_type_add-card" type="submit">Создать</button>
         </form>
       </div>
-    </div> -->
+    </div>
 
+    <!-- открытие фото побольше -->
+    <div class="popup popup_type_image">
+
+    </div>
+
+
+
+    <!-- templates -->
     <template id="card-template">
       <li class="element">
         <img src="" alt="" class="element__img" />
