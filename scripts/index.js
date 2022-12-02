@@ -19,6 +19,11 @@ const formElementAddCard = popupAddCardElement.querySelector(".popup__content");
 const popupPlaceElement = popupAddCardElement.querySelector(".popup__input_field_place");   // поле ввода названия места
 const popupLinkElement = popupAddCardElement.querySelector(".popup__input_field_link");  // поле ввода ссылки на фото
 
+// открытие фотографии на весь размер
+const popupShowImage = document.querySelector(".popup_type_image");  // попап показа полноразмерного выбранного изображения
+const popupShowImageCloseButton = popupShowImage.querySelector(".popup__close"); // кнопка закрытия
+const popupImageLink = popupShowImage.querySelector(".popup__image"); // само фото
+const popupImageCaption = popupShowImage.querySelector(".popup__image-caption"); // подпись к фото
 
 
 // функции //
@@ -46,6 +51,11 @@ const closeAddCardPopup = function () {
   popupAddCardElement.classList.remove("popup_is-opened");
 };
 
+const closeShowImagePopup = function () {
+  // функция закрытия полноразмерного фото
+  popupShowImage.classList.remove("popup_is-opened");
+};
+
 function formDescriptionSubmitHandler(evt) {
   // функция отправки введённых значений из попапа в профиль
   evt.preventDefault(); // отмена стандартной отправки формы.
@@ -71,6 +81,8 @@ popupDescriptionCloseButtonElement.addEventListener("click", closeDescriptionPop
 popupAddCardCloseButtonElement.addEventListener("click", closeAddCardPopup);
 formElementDescription.addEventListener("submit", formDescriptionSubmitHandler);
 formElementAddCard.addEventListener("submit", formAddSubmitHandler);
+
+popupShowImageCloseButton.addEventListener("click", closeShowImagePopup);
 
 const initialCards = [
   {
@@ -114,14 +126,28 @@ const cardTemplate = document.querySelector("#card-template").content;
 const cardElements = document.querySelector(".elements__container");
 
 function handleLike(event) {
-  event.target
-    .closest(".element__like")
-    .classList.toggle("element__like_is-liked");
+  event.target.closest(".element__like").classList.toggle("element__like_is-liked");
 }
 
 function handleDeleteCard(event) {
   event.target.closest(".element").remove();
 }
+
+
+
+function handleShowImage(event) {
+  // функция открытия попапа добавления карточки
+  const currentCard = event.target.closest(".element");
+  const currentImageLink = currentCard.querySelector(".element__img");
+  const currentTitle = currentCard.querySelector(".element__title");
+
+  popupImageLink.src = currentImageLink.src;
+  popupImageCaption.textContent = currentTitle.textContent;
+  // console.log(event.target.closest(".element"));
+  popupShowImage.classList.add("popup_is-opened");
+
+}
+
 
 const newCardButtonElement = document.querySelector(".add-button");
 newCardButtonElement.addEventListener("click", openPopupAddCard);
@@ -139,6 +165,8 @@ function createCard(item) {
 
   const deleteButton = newCard.querySelector(".element__delete");
   deleteButton.addEventListener("click", handleDeleteCard);
+
+  cardImageLink.addEventListener("click", handleShowImage);
 
   return newCard;
 }
