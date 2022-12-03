@@ -1,6 +1,4 @@
 // объявления констант и переменных //
-// const popupElement = document.querySelector(".popup"); //////////////// весь попап
-
 // редактирование профиля
 const popupDescriptionElement = document.querySelector(".popup_type_description"); // попап редактирования профиля
 const popupOpenButtonElement = document.querySelector(".profile__edit-button"); // кнопка открытия попапа редактирования профиля
@@ -25,6 +23,45 @@ const popupShowImageCloseButton = popupShowImage.querySelector(".popup__close");
 const popupImageLink = popupShowImage.querySelector(".popup__image"); // само фото
 const popupImageCaption = popupShowImage.querySelector(".popup__image-caption"); // подпись к фото
 
+// контент страницы
+const initialCards = [
+  {
+    name: "Лобня",
+    link: "https://live.staticflickr.com/5508/11602145884_f8625acaa5_o.jpg",
+    description: "Изображение Спасской церкви в микрорайоне Киово в городе Лобня зимним солнечным днём"
+  },
+  {
+    name: "Новгород Великий",
+    link: "https://live.staticflickr.com/7388/11736284475_c400ebe472_o.jpg",
+    description: "Изображение панорамы на реку Волхов и стену Новгородского кремля с одной из его башен"
+  },
+  {
+    name: "Хельсинки",
+    link: "https://live.staticflickr.com/7567/15073871604_8a4324dc49_o.jpg",
+    description: "Изображение Олимпийского стадиона и его башни в Хельсинки"
+  },
+  {
+    name: "Дмитров",
+    link: "https://live.staticflickr.com/3672/11755853735_ba32452dd1_o.jpg",
+    description: "Изображение памятника Юрию Долгорукому на фоне собора дмитровского кремля"
+  },
+  {
+    name: "Санкт-Петербург",
+    link: "https://live.staticflickr.com/5528/11692734935_8d6a9ed03c_o.jpg",
+    description: "Изображение Исаакиевского собора в Санкт-Петербурге с высоты птичьего полёта"
+  },
+  {
+    name: "Эспоо",
+    link: "https://live.staticflickr.com/1629/24574611523_4369cff19a_o.jpg",
+    description: "Вечернее изображение лыжни в свете фонарей в центральном парке города Эспоо"
+  },
+];
+
+// заполнение страницы контентом
+const cardTemplate = document.querySelector("#card-template").content;
+const cardElements = document.querySelector(".elements__container");
+
+
 
 // функции //
 const openPopupDescription = function () {
@@ -37,93 +74,31 @@ const openPopupDescription = function () {
 const openPopupAddCard = function () {
   // функция открытия попапа добавления карточки
   popupAddCardElement.classList.add("popup_is-opened");
-  popupPlaceElement.value = "";
+  popupPlaceElement.value = "";  // очистка полей для повторного использования
   popupLinkElement.value = "";
 };
 
-const closeDescriptionPopup = function () {
-  // функция закрытия попапа редактирования профиля
-  popupDescriptionElement.classList.remove("popup_is-opened");
-};
+function closePopup(event) {
+  // функция закрытия текущего попапа
+  event.target.closest(".popup").classList.remove("popup_is-opened");
+}
 
-const closeAddCardPopup = function () {
-  // функция закрытия попапа добавления карточки
-  popupAddCardElement.classList.remove("popup_is-opened");
-};
-
-const closeShowImagePopup = function () {
-  // функция закрытия полноразмерного фото
-  popupShowImage.classList.remove("popup_is-opened");
-};
-
-function formDescriptionSubmitHandler(evt) {
+function formDescriptionSubmitHandler(event) {
   // функция отправки введённых значений из попапа в профиль
-  evt.preventDefault(); // отмена стандартной отправки формы.
+  event.preventDefault(); // отмена стандартной отправки формы.
   docNameElement.textContent = popupNameElement.value;
   docSubtitleElement.textContent = popupSubtitleElement.value;
-  closeDescriptionPopup();
+  closePopup(event);
 }
 
 function formAddSubmitHandler(event) {
   // функция отправки новой карточки через попап
   event.preventDefault();
-  const newPlace = {name: popupPlaceElement.value, link: popupLinkElement.value};
+  const newPlace = {name: popupPlaceElement.value, link: popupLinkElement.value, description: "Картинка добавлена пользователем, если вы это читаете - ссылка битая"};
   const newCard = createCard(newPlace);
-  console.log(newPlace);
   cardElements.prepend(newCard);
-  closeAddCardPopup();
+  closePopup(event);
 }
-
-// обработчики событий //
-popupOpenButtonElement.addEventListener("click", openPopupDescription); // открытие попапа редактирования профиля
-popupOpenButtonAddCard.addEventListener("click", openPopupAddCard); // открытие попапа добавления карточки
-popupDescriptionCloseButtonElement.addEventListener("click", closeDescriptionPopup); // закрытие попапа редактирования профиля
-popupAddCardCloseButtonElement.addEventListener("click", closeAddCardPopup);
-formElementDescription.addEventListener("submit", formDescriptionSubmitHandler);
-formElementAddCard.addEventListener("submit", formAddSubmitHandler);
-
-popupShowImageCloseButton.addEventListener("click", closeShowImagePopup);
-
-const initialCards = [
-  {
-    name: "Лобня",
-    link: "https://live.staticflickr.com/5508/11602145884_f8625acaa5_o.jpg",
-    // description:
-    //   "Изображение Спасской церкви в районе Киово в городе Лобня в ясный зимний день",
-  },
-  {
-    name: "Новгород Великий",
-    link: "https://live.staticflickr.com/7388/11736284475_c400ebe472_o.jpg",
-    // description:
-    //   "Изображение панорамы на реку Волхов и стену новгородского кремля с одной из его башен",
-  },
-  {
-    name: "Павловск",
-    link: "https://live.staticflickr.com/3794/11737267794_0d60b94473_o.jpg",
-    // description: "Изображение скульптуры музы Эвтерпы из Павловского парка",
-  },
-  {
-    name: "Дмитров",
-    link: "https://live.staticflickr.com/3672/11755853735_ba32452dd1_o.jpg",
-    // description:
-    //   "Изображение памятника Юрию Долгорукому на фоне Успенсокго собора в Дмитрове",
-  },
-  {
-    name: "Санкт-Петербург",
-    link: "https://live.staticflickr.com/5528/11692734935_8d6a9ed03c_o.jpg",
-    // description:
-    //   "Изображение Исаакиевского собора в Санкт-Петербурге с высоты птичьего полёта",
-  },
-  {
-    name: "Эспоо",
-    link: "https://live.staticflickr.com/1679/24570757004_3b93335705_o.jpg",
-    // description:
-    //   "Изображение вечерней лыжной трассы при свете фонарей в центральном парке Эспоо, Финляндия",
-  },
-];
-
-const cardTemplate = document.querySelector("#card-template").content;
-const cardElements = document.querySelector(".elements__container");
 
 function handleLike(event) {
   event.target.closest(".element__like").classList.toggle("element__like_is-liked");
@@ -133,8 +108,6 @@ function handleDeleteCard(event) {
   event.target.closest(".element").remove();
 }
 
-
-
 function handleShowImage(event) {
   // функция открытия попапа добавления карточки
   const currentCard = event.target.closest(".element");
@@ -143,14 +116,9 @@ function handleShowImage(event) {
 
   popupImageLink.src = currentImageLink.src;
   popupImageCaption.textContent = currentTitle.textContent;
-  // console.log(event.target.closest(".element"));
   popupShowImage.classList.add("popup_is-opened");
 
 }
-
-
-const newCardButtonElement = document.querySelector(".add-button");
-newCardButtonElement.addEventListener("click", openPopupAddCard);
 
 function createCard(item) {
   const newCard = cardTemplate.cloneNode(true);
@@ -158,20 +126,26 @@ function createCard(item) {
   cardTitle.textContent = item.name;
   const cardImageLink = newCard.querySelector(".element__img");
   cardImageLink.src = item.link;
-  // cardImageLink.alt = item.description;
-
+  cardImageLink.alt = item.description;
   const likeButton = newCard.querySelector(".element__like");
   likeButton.addEventListener("click", handleLike);
-
   const deleteButton = newCard.querySelector(".element__delete");
   deleteButton.addEventListener("click", handleDeleteCard);
-
   cardImageLink.addEventListener("click", handleShowImage);
-
   return newCard;
 }
 
+// наполнение страницы контентом //
 initialCards.forEach(function (item) {
   const card = createCard(item);
   cardElements.append(card);
 });
+
+// обработчики событий //
+popupOpenButtonElement.addEventListener("click", openPopupDescription); // открытие попапа редактирования профиля
+popupOpenButtonAddCard.addEventListener("click", openPopupAddCard); // открытие попапа добавления карточки
+formElementDescription.addEventListener("submit", formDescriptionSubmitHandler); // отправка данных с попапа редактирования профиля
+formElementAddCard.addEventListener("submit", formAddSubmitHandler); // отправка данных с попапа добавления карточки
+popupShowImageCloseButton.addEventListener("click", closePopup); // закрытие попапа просмотра фото
+popupAddCardCloseButtonElement.addEventListener("click", closePopup); // закрытие попапа добавления карточки
+popupDescriptionCloseButtonElement.addEventListener("click", closePopup); // закрытие попапа редактирования профиля

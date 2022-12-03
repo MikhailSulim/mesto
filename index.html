@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta
       name="Description"
       content="Автор - Сулим Михаил. Проектная работа: Mesto. Сайт создан в рамках обучения в Яндекс Практикуме на факультете Веб-разработчик."
-    />
-    <link rel="stylesheet" href="./pages/index.css" />
+    >
+    <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto</title>
   </head>
 
@@ -39,32 +39,50 @@
       <p class="footer__copyright">&copy; 2022 Михаил Сулим</p>
     </footer>
 
-
     <!-- popup-->
-
     <!-- новое описание профиля -->
     <div class="popup popup_type_description">
       <div class="popup__container">
-        <button class="popup__close popup__close_type_description" type="button"></button>
+        <button
+          class="popup__close popup__close_type_description"
+          type="button"
+        ></button>
         <form class="popup__content">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input type="text" class="popup__input popup__input_field_name" />
-          <input type="text" class="popup__input popup__input_field_subtitle" />
-          <button class="popup__save popup__save_type_description" type="submit">Сохранить</button>
+          <input type="text" class="popup__input popup__input_field_name">
+          <input type="text" class="popup__input popup__input_field_subtitle">
+          <button
+            class="popup__save popup__save_type_description"
+            type="submit"
+          >
+            Сохранить
+          </button>
         </form>
       </div>
     </div>
 
-
     <!-- новая карточка с фото -->
     <div class="popup popup_type_add-card">
       <div class="popup__container">
-        <button class="popup__close popup__close_type_add-card" type="button"></button>
+        <button
+          class="popup__close popup__close_type_add-card"
+          type="button"
+        ></button>
         <form class="popup__content">
           <h2 class="popup__title">Новое место</h2>
-          <input type="text" class="popup__input popup__input_field_place" placeholder="Название"/>
-          <input type="text" class="popup__input popup__input_field_link" placeholder="Ссылка на картинку"/>
-          <button class="popup__save popup__save_type_add-card" type="submit">Создать</button>
+          <input
+            type="text"
+            class="popup__input popup__input_field_place"
+            placeholder="Название"
+          >
+          <input
+            type="url"
+            class="popup__input popup__input_field_link"
+            placeholder="Ссылка на картинку"
+          >
+          <button class="popup__save popup__save_type_add-card" type="submit">
+            Создать
+          </button>
         </form>
       </div>
     </div>
@@ -72,21 +90,21 @@
     <!-- открыть фото целиком -->
     <div class="popup popup_type_image">
       <div class="popup__image-container">
-        <button class="popup__close popup__close_type_image" type="button"></button>
+        <button
+          class="popup__close popup__close_type_image"
+          type="button">
+        </button>
         <figure class="popup__image-figure">
-          <img src="" class="popup__image">
+          <img src="#" alt="" class="popup__image" >
           <figcaption class="popup__image-caption"></figcaption>
         </figure>
       </div>
-
     </div>
-
-
 
     <!-- templates -->
     <template id="card-template">
       <li class="element">
-        <img src="" alt="" class="element__img" />
+        <img src="" alt="" class="element__img">
         <button class="element__delete" type="button"></button>
         <div class="element__line-container">
           <h2 class="element__title"></h2>
