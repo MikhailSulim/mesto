@@ -3,6 +3,7 @@
   min-width: 320px;
   width: 100%;
   padding-bottom: 66px;
+  min-height: 50vh;
 }
 
 @media screen and (max-width: 880px) {
