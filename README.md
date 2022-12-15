@@ -1,4 +1,4 @@
-# Проектная работа: "Место". Создана в рамках учёбы в [Яндекс.Практикум](https://practicum.yandex.ru) на факультете ["Веб-разработчик"](https://practicum.yandex.ru/web/). Четвёртый и пятый спринты.
+# Проектная работа: "Место". Создана в рамках учёбы в [Яндекс.Практикум](https://practicum.yandex.ru) на факультете ["Веб-разработчик"](https://practicum.yandex.ru/web/). Спринты 4 — 6.
 
 ## Описание:
 
@@ -45,8 +45,11 @@ git clone https://github.com/MikhailSulim/mesto.git
 
 - [Ссылка на макет в Figma. Спринт 4.](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
 - [Ссылка на макет в Figma. Спринт 5.](https://www.figma.com/file/bjyvbKKJN2naO0ucURl2Z0/JavaScript.-Sprint-5?node-id=0%3A1)
+- [Ссылка на макет в Figma. Спринт 6.](https://www.figma.com/file/kRVLKwYG3d1HGLvh7JFWRT/JavaScript.-Sprint-6?node-id=0%3A1)
+
 
 ## Ссылки на чеклисты:
 
 - [Чеклист проектной работы. Спринт 4.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-4.pdf)
 - [Чеклист проектной работы. Спринт 5.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-5.pdf)
+- [Чеклист проектной работы. Спринт 6.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-6.pdf)

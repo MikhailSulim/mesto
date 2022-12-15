@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="Description"
       content="Автор - Сулим Михаил. Проектная работа: Mesto. Сайт создан в рамках обучения в Яндекс Практикуме на факультете Веб-разработчик."
-    >
-    <link rel="stylesheet" href="./pages/index.css">
+    />
+    <link rel="stylesheet" href="./pages/index.css" />
     <title>Mesto</title>
   </head>
 
@@ -39,7 +39,7 @@
       <p class="footer__copyright">&copy; 2022 Михаил Сулим</p>
     </footer>
 
-    <!-- popup-->
+    <!-- popups-->
     <!-- новое описание профиля -->
     <div class="popup popup_type_description">
       <div class="popup__container">
@@ -49,8 +49,26 @@
         ></button>
         <form class="popup__content">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input type="text" class="popup__input popup__input_field_name">
-          <input type="text" class="popup__input popup__input_field_subtitle">
+          <input
+            id="input-name"
+            type="text"
+            class="popup__input popup__input_field_name"
+            minlength="2"
+            maxlength="40"
+            placeholder="Имя"
+            required
+          />
+          <span id="input-name-error" class="popup__input-error"></span>
+          <input
+            id="input-subtitle"
+            type="text"
+            class="popup__input popup__input_field_subtitle"
+            minlength="2"
+            maxlength="200"
+            placeholder="О себе"
+            required
+          />
+          <span id="input-subtitle-error" class="popup__input-error"></span>
           <button
             class="popup__save popup__save_type_description"
             type="submit"
@@ -72,15 +90,26 @@
           <h2 class="popup__title">Новое место</h2>
           <input
             type="text"
+            id="input-place"
             class="popup__input popup__input_field_place"
             placeholder="Название"
-          >
+            minlength="2"
+            maxlength="30"
+            required
+          />
+          <span id="input-place-error" class="popup__input-error"></span>
           <input
             type="url"
+            id="input-link"
             class="popup__input popup__input_field_link"
             placeholder="Ссылка на картинку"
+            required
+          />
+          <span id="input-link-error" class="popup__input-error"></span>
+          <button
+            class="popup__save popup__save_type_add-card popup__save_type_disabled"
+            type="submit"
           >
-          <button class="popup__save popup__save_type_add-card" type="submit">
             Создать
           </button>
         </form>
@@ -92,10 +121,10 @@
       <div class="popup__image-container">
         <button
           class="popup__close popup__close_type_image"
-          type="button">
-        </button>
+          type="button"
+        ></button>
         <figure class="popup__image-figure">
-          <img src="#" alt="" class="popup__image" >
+          <img src="#" alt="" class="popup__image" />
           <figcaption class="popup__image-caption"></figcaption>
         </figure>
       </div>
@@ -104,7 +133,7 @@
     <!-- templates -->
     <template id="card-template">
       <li class="element">
-        <img src="#" alt="" class="element__img">
+        <img src="#" alt="" class="element__img" />
         <button class="element__delete" type="button"></button>
         <div class="element__line-container">
           <h2 class="element__title"></h2>
@@ -114,6 +143,7 @@
     </template>
 
     <script src="./scripts/content.js"></script>
+    <script src="./scripts/validate.js"></script>
     <script src="./scripts/index.js"></script>
   </body>
 </html>

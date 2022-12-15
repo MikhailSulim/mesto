@@ -32,11 +32,31 @@ const cardElements = document.querySelector(".elements__container");
 function openPopup(currentPopup) {
   // функция открытия текущего попапа
   currentPopup.classList.add("popup_is-opened");
+  // currentPopup.addEventListener("input", enableValidation);
+  document.addEventListener('keydown', closePopupByPressEsc);
+  currentPopup.addEventListener('mousedown', closePopupByClickOverlay);
 }
 
 function closePopup(currentPopup) {
   // функция закрытия текущего попапа
   currentPopup.classList.remove("popup_is-opened");
+  // currentPopup.removeEventListener("input", enableValidation);
+  document.removeEventListener('keydown', closePopupByPressEsc);
+  currentPopup.removeEventListener('mousedown', closePopupByClickOverlay);
+}
+
+function closePopupByPressEsc(event) {  // функция закрытия попапа кнопкой esc
+  const currentOpenPopup = document.querySelector(".popup_is-opened");
+  if (event.key === 'Escape') {
+    closePopup(currentOpenPopup);
+  }
+}
+
+function closePopupByClickOverlay(event) { // функция закрытия попапа нажатием вне его формы
+  const currentOpenPopup = document.querySelector(".popup_is-opened");
+  if (event.target === event.currentTarget) {
+    closePopup(currentOpenPopup);
+  }
 }
 
 function sendDescriptionForm(event) {
@@ -54,6 +74,7 @@ function sendAddNewCardForm(event) {
   const newCard = createCard(newPlace);
   cardElements.prepend(newCard);
   closePopup(event.target.closest(".popup"));
+
 }
 
 function handleLike(event) {
@@ -92,8 +113,8 @@ initialCards.forEach(function (item) {
 
 // обработчики событий //
 popupOpenDescriptionBtn.addEventListener("click", () => {popupFieldName.value = docNameElement.textContent;   popupFieldSubtitle.value = docSubtitleElement.textContent;
-  openPopup(popupDescription)}); // открытие попапа редактирования профиля
-popupOpenAddCardBtn.addEventListener("click", () => {popupFieldPlace.value = ""; popupFieldLink.value = ""; openPopup(popupAddCard)}); // открытие попапа добавления карточки
+  clearError(popupDescription); openPopup(popupDescription)}); // открытие попапа редактирования профиля
+popupOpenAddCardBtn.addEventListener("click", () => {popupFieldPlace.value = ""; popupFieldLink.value = ""; clearError(popupAddCard); openPopup(popupAddCard)}); // открытие попапа добавления карточки
 formElementDescription.addEventListener("submit", sendDescriptionForm); // отправка данных с попапа редактирования профиля
 formElementAddCard.addEventListener("submit", sendAddNewCardForm); // отправка данных с попапа добавления карточки
 popupShowImageCloseBtn.addEventListener("click", () => {closePopup(popupShowImage)}); // закрытие попапа просмотра фото
