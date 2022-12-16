@@ -1,24 +1,10 @@
-const formConfig = {
-  formSelector: ".popup__content",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__save",
-  inactiveButtonClass: "popup__save_type_disabled",
-  inputErrorClass: "popup__input_type_error",
-  errorClass: "popup__input-error",
-};
-
 const enableValidation = (config) => {
-  const { formSelector, inputSelector, submitButtonSelector, ...restConfig } =
-    config;
-  const forms = [...document.querySelectorAll(formSelector)]; // приведение списка всех найденных форм в попапах к массиву
+  const { formSelector, inputSelector, submitButtonSelector, ...restConfig } = config;
+  const forms = document.querySelectorAll(formSelector);
 
   forms.forEach((form) => {
     const inputs = [...form.querySelectorAll(inputSelector)]; // приведение списка всех найденных инпутов в попапах к массиву
     const button = form.querySelector(submitButtonSelector); // поиск кнопки сохранить на форме
-
-    form.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-    });
 
     inputs.forEach((input) => {
       input.addEventListener("input", () => {
@@ -29,12 +15,13 @@ const enableValidation = (config) => {
   });
 };
 
-function clearError(popup) {
+function clearErrors(form, config) {
   // функция очистки ошибок валидации в случае, если попап был закрыт без сохранения
-  const inputs = [...popup.querySelectorAll(`.${formConfig.inputErrorClass}`)];
-  const errors = [...popup.querySelectorAll(`.${formConfig.errorClass}`)];
+  const inputs = form.querySelectorAll(`.${config.inputErrorClass}`);
+  const errors = form.querySelectorAll(`.${config.errorClass}`);
+
   inputs.forEach((input) => {
-    input.classList.remove(formConfig.inputErrorClass);
+    input.classList.remove(config.inputErrorClass);
   });
 
   errors.forEach((error) => {
@@ -42,17 +29,35 @@ function clearError(popup) {
   });
 }
 
+function showErrors(input, error, config) { // функция показа стиля ошибок валидации
+  error.textContent = input.validationMessage; // добавить подпись ошибки ввода в инпут
+  input.classList.add(config.inputErrorClass); // добавить стиль ошибки для инпута
+}
+
+function hideErrors(input, error, config) { // функция скрытия стиля ошибок валидации
+  error.textContent = "";
+  input.classList.remove(config.inputErrorClass); // убрать стиль ошибки для инпута
+}
+
 function checkFormValid(input, config) {
   //функция проверки валидности инпутов и установка соответствующих стилей
   const error = document.querySelector(`#${input.id}-error`); //  поиск спан-элемента ошибки для текущего инпута
   // демонстрация ошибки
   if (input.validity.valid) {
-    error.textContent = "";
-    input.classList.remove(config.inputErrorClass); // убрать стиль ошибки для инпута
+    hideErrors(input, error, config);
   } else {
-    error.textContent = input.validationMessage; // добавить подпись ошибки ввода в инпут
-    input.classList.add(config.inputErrorClass); // добавить стиль ошибки для инпута
+    showErrors(input, error, config);
   }
+}
+
+function enableSubmitBtn(button, config) { // функция для активации кнопки отправки
+  button.classList.remove(config.inactiveButtonClass);
+  button.disabled = "";
+}
+
+function disableSubmitBtn(button, config) { // функция деактивации кнопки отправки
+  button.classList.add(config.inactiveButtonClass);
+  button.disabled = "disabled";
 }
 
 function toggleStyleSubmitBtn(inputs, button, config) {
@@ -61,12 +66,10 @@ function toggleStyleSubmitBtn(inputs, button, config) {
     return input.validity.valid;
   });
   if (formValid) {
-    button.classList.remove(config.inactiveButtonClass);
-    button.disabled = "";
+    enableSubmitBtn(button, config);
   } else {
-    button.classList.add(config.inactiveButtonClass);
-    button.disabled = "disabled";
+    disableSubmitBtn(button, config);
   }
 }
 
-enableValidation(formConfig);
+enableValidation(validationConfig);
