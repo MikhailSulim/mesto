@@ -1,5 +1,5 @@
 // константы для валидации форм
-const validationConfig = {
+export const validationConfig = {
   formSelector: ".popup__content",
   inputSelector: ".popup__input",
   submitButtonSelector: ".popup__save",

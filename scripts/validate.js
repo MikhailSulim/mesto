@@ -1,3 +1,5 @@
+import { validationConfig } from "./constants.js";
+
 const enableValidation = (config) => {
   const { formSelector, inputSelector, submitButtonSelector, ...restConfig } = config;
   const forms = document.querySelectorAll(formSelector);
@@ -73,3 +75,5 @@ function toggleStyleSubmitBtn(inputs, button, config) {
 }
 
 enableValidation(validationConfig);
+
+export {enableValidation, clearErrors, showErrors, hideErrors, checkFormValid, enableSubmitBtn, disableSubmitBtn, toggleStyleSubmitBtn};

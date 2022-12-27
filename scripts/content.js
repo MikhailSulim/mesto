@@ -1,5 +1,5 @@
 // контент страницы
-const initialCards = [
+export const initialCards = [
   {
     name: "Лобня",
     link: "https://live.staticflickr.com/5508/11602145884_f8625acaa5_o.jpg",

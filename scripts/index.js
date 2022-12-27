@@ -1,3 +1,9 @@
+// импорт
+import {initialCards} from './content.js';
+import {validationConfig} from'./constants.js';
+import {clearErrors, disableSubmitBtn} from './validate.js';
+
+
 // объявления констант и переменных //
 // редактирование профиля
 const popupDescription = document.querySelector(".popup_type_description"); // попап редактирования профиля
@@ -84,6 +90,7 @@ function sendAddNewCardForm(event) {
   cardElements.prepend(newCard);
   disableSubmitBtn(popupAddCardSubmitBtn, validationConfig);
   closePopup(popupAddCard);
+  console.log(formElementAddCard);
 }
 
 function handleLike(event) {
@@ -150,7 +157,7 @@ popupShowImageCloseBtn.addEventListener("click", () => {
   closePopup(popupShowImage);
 });
 
-popupAddCardCloseBtn.addEventListener("click", () => {
+popupAddCardCloseBtn.addEventListener("click", (evt) => {
   // закрытие попапа добавления карточки
   closePopup(popupAddCard);
 });
