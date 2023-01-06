@@ -1,8 +1,8 @@
 // импорт
-import {initialCards} from './content.js';
-import {validationConfig} from'./constants.js';
-import {clearErrors, disableSubmitBtn} from './validate.js';
-
+import { initialCards } from "./content.js";
+import { validationConfig, cardTemplate } from "./constants.js";
+import { clearErrors, disableSubmitBtn } from "./validate.js";
+import Card from "./Card.js";
 
 // объявления констант и переменных //
 // редактирование профиля
@@ -30,14 +30,6 @@ const popupFieldPlace = popupAddCard.querySelector(".popup__input_field_place");
 const popupFieldLink = popupAddCard.querySelector(".popup__input_field_link"); // поле ввода ссылки на фото
 const formElementAddCard = popupAddCard.querySelector(".popup__content"); // часть попапа добавления карточки
 
-// открытие фотографии на весь размер
-const popupShowImage = document.querySelector(".popup_type_image"); // попап показа полноразмерного выбранного изображения
-const popupShowImageCloseBtn = popupShowImage.querySelector(".popup__close"); // кнопка закрытия
-const popupImage = popupShowImage.querySelector(".popup__image"); // само фото
-const popupImageCaption = popupShowImage.querySelector(".popup__image-caption"); // подпись к фото
-
-// заполнение страницы контентом
-const cardTemplate = document.querySelector("#card-template").content;
 const cardElements = document.querySelector(".elements__container");
 
 // функции //
@@ -86,50 +78,17 @@ function sendAddNewCardForm(event) {
     link: popupFieldLink.value,
     description: `На фото - ${popupFieldPlace.value}`,
   };
-  const newCard = createCard(newPlace);
-  cardElements.prepend(newCard);
+
+  const newCard = new Card(newPlace, cardTemplate);
+  newCard.generateCard(cardElements, false);
   disableSubmitBtn(popupAddCardSubmitBtn, validationConfig);
   closePopup(popupAddCard);
-  console.log(formElementAddCard);
-}
-
-function handleLike(event) {
-  // функция установки или снятия лайка с фото
-  event.target.classList.toggle("element__like_is-liked");
-}
-
-function handleDeleteCard(event) {
-  // функция удаления карточки с фото
-  event.target.closest(".element").remove();
-}
-
-function createCard(item) {
-  // функция создания новой карточки
-  const newCard = cardTemplate.cloneNode(true); // копирование содержимого заготовки template
-  const cardTitle = newCard.querySelector(".element__title"); // элемент карточки название
-  const cardImageLink = newCard.querySelector(".element__img"); // элемент карточки фотография
-  const likeButton = newCard.querySelector(".element__like"); // элемент карточки кнопка лайка
-  const deleteButton = newCard.querySelector(".element__delete"); // элемент карточки кнопка удаления
-
-  cardTitle.textContent = item.name; // присвоить название
-  cardImageLink.src = item.link; // присвоить линк фото
-  cardImageLink.alt = item.description; // присвоить описание alt
-
-  likeButton.addEventListener("click", handleLike); // обработчик нажатия на кнопку лайка
-  deleteButton.addEventListener("click", handleDeleteCard); // обработчик нажатия на кнопку удаления
-  cardImageLink.addEventListener("click", () => {
-    popupImage.src = item.link;
-    popupImage.alt = item.description;
-    popupImageCaption.textContent = item.name;
-    openPopup(popupShowImage);
-  }); // обработчик нажатия на фото для появления попапа с полноразмерной версией
-  return newCard;
 }
 
 // наполнение страницы контентом //
-initialCards.forEach(function (item) {
-  const card = createCard(item);
-  cardElements.append(card);
+initialCards.forEach((item) => {
+  const card = new Card(item, cardTemplate);
+  card.generateCard(cardElements, true);
 });
 
 // обработчики событий //
@@ -151,11 +110,6 @@ popupOpenAddCardBtn.addEventListener("click", () => {
 
 formElementDescription.addEventListener("submit", sendDescriptionForm); // отправка данных с попапа редактирования профиля
 formElementAddCard.addEventListener("submit", sendAddNewCardForm); // отправка данных с попапа добавления карточки
-
-popupShowImageCloseBtn.addEventListener("click", () => {
-  // закрытие попапа просмотра фото
-  closePopup(popupShowImage);
-});
 
 popupAddCardCloseBtn.addEventListener("click", (evt) => {
   // закрытие попапа добавления карточки
