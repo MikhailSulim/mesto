@@ -1,8 +1,9 @@
 // импорт
 import { initialCards } from "./content.js";
 import { validationConfig, cardTemplate } from "./constants.js";
-import { clearErrors, disableSubmitBtn } from "./validate.js";
+// import { clearErrors, disableSubmitBtn } from "./validate.js";
 import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
 
 // объявления констант и переменных //
 // редактирование профиля
@@ -33,6 +34,16 @@ const formElementAddCard = popupAddCard.querySelector(".popup__content"); // ч�
 const cardElements = document.querySelector(".elements__container");
 
 // функции //
+// function validateForms (formSelectors) {
+//   const formElements = Array.from(document.querySelectorAll(formSelectors.formSelector));
+//   formElements.forEach(formElement => {
+//     const form = new FormValidator(formSelectors, formElement);
+//     formValidators[formElement.getAttribute('name')] = form;
+//     form.enableValidation();
+//   });
+// }
+
+
 function openPopup(currentPopup) {
   // функция открытия текущего попапа
   currentPopup.classList.add("popup_is-opened");
@@ -81,7 +92,7 @@ function sendAddNewCardForm(event) {
 
   const newCard = new Card(newPlace, cardTemplate);
   newCard.generateCard(cardElements, false);
-  disableSubmitBtn(popupAddCardSubmitBtn, validationConfig);
+
   closePopup(popupAddCard);
 }
 
@@ -91,20 +102,26 @@ initialCards.forEach((item) => {
   card.generateCard(cardElements, true);
 });
 
+const validatorPopupDescription = new FormValidator(validationConfig, popupDescription);
+validatorPopupDescription.enableValidation();
+
 // обработчики событий //
 popupOpenDescriptionBtn.addEventListener("click", () => {
   // открытие попапа редактирования профиля
   popupFieldName.value = docNameElement.textContent;
   popupFieldSubtitle.value = docSubtitleElement.textContent;
-  clearErrors(popupDescription, validationConfig);
+  validatorPopupDescription.clearErrors();
   openPopup(popupDescription);
 });
+
+const validatorPopupAdd = new FormValidator(validationConfig, popupAddCard);
+validatorPopupAdd.enableValidation();
 
 popupOpenAddCardBtn.addEventListener("click", () => {
   // открытие попапа добавления карточки
   popupFieldPlace.value = "";
   popupFieldLink.value = "";
-  clearErrors(popupAddCard, validationConfig);
+  validatorPopupAdd.clearErrors();
   openPopup(popupAddCard);
 });
 
