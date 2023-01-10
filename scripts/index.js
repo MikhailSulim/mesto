@@ -1,7 +1,6 @@
 // импорт
 import { initialCards } from "./content.js";
 import { validationConfig, cardTemplate } from "./constants.js";
-// import { clearErrors, disableSubmitBtn } from "./validate.js";
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 
@@ -26,23 +25,11 @@ const formElementDescription =
 const popupAddCard = document.querySelector(".popup_type_add-card"); // попап добавления новой карточки
 const popupOpenAddCardBtn = document.querySelector(".add-button"); // кнопка открытия попапа добавления новой карточки
 const popupAddCardCloseBtn = popupAddCard.querySelector(".popup__close"); // кнопка закрытия
-const popupAddCardSubmitBtn = popupAddCard.querySelector(".popup__save"); // кнопка отправки
 const popupFieldPlace = popupAddCard.querySelector(".popup__input_field_place"); // поле ввода названия места
 const popupFieldLink = popupAddCard.querySelector(".popup__input_field_link"); // поле ввода ссылки на фото
 const formElementAddCard = popupAddCard.querySelector(".popup__content"); // часть попапа добавления карточки
 
 const cardElements = document.querySelector(".elements__container");
-
-// функции //
-// function validateForms (formSelectors) {
-//   const formElements = Array.from(document.querySelectorAll(formSelectors.formSelector));
-//   formElements.forEach(formElement => {
-//     const form = new FormValidator(formSelectors, formElement);
-//     formValidators[formElement.getAttribute('name')] = form;
-//     form.enableValidation();
-//   });
-// }
-
 
 function openPopup(currentPopup) {
   // функция открытия текущего попапа
@@ -102,7 +89,10 @@ initialCards.forEach((item) => {
   card.generateCard(cardElements, true);
 });
 
-const validatorPopupDescription = new FormValidator(validationConfig, popupDescription);
+const validatorPopupDescription = new FormValidator(
+  validationConfig,
+  popupDescription
+);
 validatorPopupDescription.enableValidation();
 
 // обработчики событий //

@@ -1,10 +1,11 @@
+// класс валидации всех полей формы
 export default class FormValidator {
   constructor(formSelectors, formElement) {
     // сама форма
     this._formElement = formElement;
 
     // селекторы
-    this._formSelector = formSelectors.formSelector;
+    // this._formSelector = formSelectors.formSelector;
     this._inputSelector = formSelectors.inputSelector;
     this._submitButtonSelector = formSelectors.submitButtonSelector;
     this._inactiveButtonClass = formSelectors.inactiveButtonClass;
@@ -12,17 +13,17 @@ export default class FormValidator {
     this._errorClass = formSelectors.errorClass;
 
     // инпуты и кнопка
-    this._formInputs = [...this._formElement.querySelectorAll(this._inputSelector)];
+    this._formInputs = [...this._formElement.querySelectorAll(this._inputSelector),];
     this._formButton = this._formElement.querySelector(this._submitButtonSelector);
   }
 
   _setEveentListeners() {
-     this._formInputs.forEach((input) => {
-            input.addEventListener("input", () => {
-              this._checkFormValid(input);
-              this._toggleStyleSubmitBtn();
-            });
-          });
+    this._formInputs.forEach((input) => {
+      input.addEventListener("input", () => {
+        this._checkFormValid(input);
+        this._toggleStyleSubmitBtn();
+      });
+    });
   }
 
   clearErrors() {
@@ -41,12 +42,14 @@ export default class FormValidator {
     this._disableSubmitBtn();
   }
 
-  _showInputErrors(input, error) { // функция показа стиля ошибок валидации
+  _showInputErrors(input, error) {
+    // функция показа стиля ошибок валидации
     error.textContent = input.validationMessage; // добавить подпись ошибки ввода в инпут
     input.classList.add(this._inputErrorClass); // добавить стиль ошибки для инпута
   }
 
-  _hideInputErrors(input, error) { // функция скрытия стиля ошибок валидации
+  _hideInputErrors(input, error) {
+    // функция скрытия стиля ошибок валидации
     error.textContent = "";
     input.classList.remove(this._inputErrorClass); // убрать стиль ошибки для инпута
   }
@@ -62,12 +65,14 @@ export default class FormValidator {
     }
   }
 
-  _enableSubmitBtn() { // функция для активации кнопки отправки
+  _enableSubmitBtn() {
+    // функция для активации кнопки отправки
     this._formButton.classList.remove(this._inactiveButtonClass);
     this._formButton.disabled = "";
   }
 
-  _disableSubmitBtn() { // функция деактивации кнопки отправки
+  _disableSubmitBtn() {
+    // функция деактивации кнопки отправки
     this._formButton.classList.add(this._inactiveButtonClass);
     this._formButton.disabled = "disabled";
   }
@@ -83,8 +88,6 @@ export default class FormValidator {
       this._disableSubmitBtn();
     }
   }
-
-
 
   enableValidation() {
     this._setEveentListeners();

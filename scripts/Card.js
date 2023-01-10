@@ -1,16 +1,17 @@
-import {
-  popupShowImage,
-  popupShowImageCloseBtn,
-  popupImage,
-  popupImageCaption,
-} from "./constants.js";
-
+// класс создания карточки с фото и описанием
 export default class Card {
   static selectors = {
-    cardTitle: ".element__title",
-    cardImageLink: ".element__img",
-    likeButton: ".element__like",
-    deleteButton: ".element__delete",
+    // селекторы карточки
+    cardTitle: ".element__title", // название фото
+    cardImageLink: ".element__img", // ссылка на фото
+    likeButton: ".element__like", // кнопка лайка
+    deleteButton: ".element__delete", // кнопка удаления
+
+    // селекторы попапа открытия фото
+    popup: ".popup_type_image", // сам попап
+    popupCloseBtn: ".popup__close", // кнопка закрытия
+    popupImg: ".popup__image", // ссылка на изображение
+    popupCaption: ".popup__image-caption", // подпись к фото
   };
 
   constructor({ name, link, description }, cardSelector) {
@@ -28,21 +29,21 @@ export default class Card {
   }
 
   _openPopup() {
-    popupShowImage.classList.add("popup_is-opened");
+    this._popup.classList.add("popup_is-opened");
     document.addEventListener("keydown", (evt) => {
       this._closePopupByPressEsc(evt);
     });
-    popupShowImage.addEventListener("mousedown", (evt) => {
+    this._popup.addEventListener("mousedown", (evt) => {
       this._closePopupByClickOverlay(evt);
     });
   }
 
   _closePopup() {
-    popupShowImage.classList.remove("popup_is-opened");
+    this._popup.classList.remove("popup_is-opened");
     document.removeEventListener("keydown", (evt) => {
       this._closePopupByPressEsc(evt);
     });
-    popupShowImage.removeEventListener("mousedown", (evt) => {
+    this._popup.removeEventListener("mousedown", (evt) => {
       this._closePopupByClickOverlay(evt);
     });
   }
@@ -61,9 +62,11 @@ export default class Card {
 
   _setEventListeners() {
     // обработчик закрытия попапа на кнопке
-    popupShowImageCloseBtn.addEventListener("click", () => {
-      this._closePopup();
-    });
+    this._popup
+      .querySelector(Card.selectors.popupCloseBtn)
+      .addEventListener("click", () => {
+        this._closePopup();
+      });
 
     // обработчик нажатия на кнопку лайка
     this._element
@@ -85,21 +88,22 @@ export default class Card {
     this._element
       .querySelector(Card.selectors.cardImageLink)
       .addEventListener("click", () => {
-        popupImage.src = this._link;
-        popupImage.alt = this._description;
-        popupImageCaption.textContent = this._name;
+        this._popup.querySelector(Card.selectors.popupImg).src = this._link;
+        this._popup.querySelector(Card.selectors.popupImg).alt =
+          this._description;
+        this._popup.querySelector(Card.selectors.popupCaption).textContent =
+          this._name;
         this._openPopup();
       });
   }
 
   generateCard(where, isAppend) {
     this._element = this._getTemplate();
+    this._popup = document.querySelector(Card.selectors.popup);
     this._setEventListeners();
-    this._element.querySelector(Card.selectors.cardTitle).textContent =
-      this._name;
+    this._element.querySelector(Card.selectors.cardTitle).textContent = this._name;
     this._element.querySelector(Card.selectors.cardImageLink).src = this._link;
-    this._element.querySelector(Card.selectors.cardImageLink).alt =
-      this._description;
+    this._element.querySelector(Card.selectors.cardImageLink).alt = this._description;
 
     isAppend ? where.append(this._element) : where.prepend(this._element);
     return this._element;
