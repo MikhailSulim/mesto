@@ -5,7 +5,6 @@ export default class FormValidator {
     this._formElement = formElement;
 
     // селекторы
-    // this._formSelector = formSelectors.formSelector;
     this._inputSelector = formSelectors.inputSelector;
     this._submitButtonSelector = formSelectors.submitButtonSelector;
     this._inactiveButtonClass = formSelectors.inactiveButtonClass;
@@ -68,7 +67,7 @@ export default class FormValidator {
   _enableSubmitBtn() {
     // функция для активации кнопки отправки
     this._formButton.classList.remove(this._inactiveButtonClass);
-    this._formButton.disabled = "";
+    this._formButton.disabled = false;
   }
 
   _disableSubmitBtn() {

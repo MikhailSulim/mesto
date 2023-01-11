@@ -1,35 +1,29 @@
-// импорт
+// импорт констант и классов
 import { initialCards } from "./content.js";
-import { validationConfig, cardTemplate } from "./constants.js";
+import  {validationConfig, cardTemplate, cardConfig, popupDescription, popupOpenDescriptionBtn, popupFieldName,
+  docNameElement, popupFieldSubtitle, docSubtitleElement, popupDescriptionCloseBtn, formElementDescription, popupAddCard, popupOpenAddCardBtn,
+  popupAddCardCloseBtn, popupFieldPlace, popupFieldLink, formElementAddCard, popupImage, popupImageLink,
+  popupImageDescription, popupImageCloseBtn, cardElements} from "./constants.js"
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
 
-// объявления констант и переменных //
-// редактирование профиля
-const popupDescription = document.querySelector(".popup_type_description"); // попап редактирования профиля
-const popupOpenDescriptionBtn = document.querySelector(".profile__edit-button"); // кнопка открытия попапа редактирования профиля
-const popupFieldName = popupDescription.querySelector(
-  ".popup__input_field_name"
-); // поле ввода имени в попапе
-const docNameElement = document.querySelector(".profile__name"); // поле отображения имени в профиле
-const popupFieldSubtitle = popupDescription.querySelector(
-  ".popup__input_field_subtitle"
-); // поле ввода имени описания в попапе
-const docSubtitleElement = document.querySelector(".profile__subtitle"); // поле отображения описания в профиле
-const popupDescriptionCloseBtn =
-  popupDescription.querySelector(".popup__close"); // кнопка закрытия
-const formElementDescription =
-  popupDescription.querySelector(".popup__content"); // часть попапа редактирования профиля с контентом
 
-// добавление новой карточки
-const popupAddCard = document.querySelector(".popup_type_add-card"); // попап добавления новой карточки
-const popupOpenAddCardBtn = document.querySelector(".add-button"); // кнопка открытия попапа добавления новой карточки
-const popupAddCardCloseBtn = popupAddCard.querySelector(".popup__close"); // кнопка закрытия
-const popupFieldPlace = popupAddCard.querySelector(".popup__input_field_place"); // поле ввода названия места
-const popupFieldLink = popupAddCard.querySelector(".popup__input_field_link"); // поле ввода ссылки на фото
-const formElementAddCard = popupAddCard.querySelector(".popup__content"); // часть попапа добавления карточки
+// функции //
+function createNewCard(place) { // функция создания новой карточки
+  const card = new Card({
+    place: place,
+    config: cardConfig,
+    template: cardTemplate,
+    handleCardClick: (name, link, description) => {
+      popupImageLink.src = link;
+      popupImageLink.alt = description;
+      popupImageDescription.textContent = name;
+      openPopup(popupImage);
+    },
+  });
 
-const cardElements = document.querySelector(".elements__container");
+  cardElements.prepend(card.generateCard());
+}
 
 function openPopup(currentPopup) {
   // функция открытия текущего попапа
@@ -76,24 +70,25 @@ function sendAddNewCardForm(event) {
     link: popupFieldLink.value,
     description: `На фото - ${popupFieldPlace.value}`,
   };
-
-  const newCard = new Card(newPlace, cardTemplate);
-  newCard.generateCard(cardElements, false);
-
+  createNewCard(newPlace);
   closePopup(popupAddCard);
 }
 
 // наполнение страницы контентом //
-initialCards.forEach((item) => {
-  const card = new Card(item, cardTemplate);
-  card.generateCard(cardElements, true);
+initialCards.reverse().forEach((item) => {
+  createNewCard(item);
 });
 
-const validatorPopupDescription = new FormValidator(
-  validationConfig,
-  popupDescription
-);
+
+//   валидация   //
+// добавление валидации на попап редактирования профиля
+const validatorPopupDescription = new FormValidator(validationConfig, popupDescription);
 validatorPopupDescription.enableValidation();
+
+// добавление валидации на попап добавления новой карточки
+const validatorPopupAdd = new FormValidator(validationConfig, popupAddCard);
+validatorPopupAdd.enableValidation();
+
 
 // обработчики событий //
 popupOpenDescriptionBtn.addEventListener("click", () => {
@@ -103,9 +98,6 @@ popupOpenDescriptionBtn.addEventListener("click", () => {
   validatorPopupDescription.clearErrors();
   openPopup(popupDescription);
 });
-
-const validatorPopupAdd = new FormValidator(validationConfig, popupAddCard);
-validatorPopupAdd.enableValidation();
 
 popupOpenAddCardBtn.addEventListener("click", () => {
   // открытие попапа добавления карточки
@@ -118,7 +110,7 @@ popupOpenAddCardBtn.addEventListener("click", () => {
 formElementDescription.addEventListener("submit", sendDescriptionForm); // отправка данных с попапа редактирования профиля
 formElementAddCard.addEventListener("submit", sendAddNewCardForm); // отправка данных с попапа добавления карточки
 
-popupAddCardCloseBtn.addEventListener("click", (evt) => {
+popupAddCardCloseBtn.addEventListener("click", () => {
   // закрытие попапа добавления карточки
   closePopup(popupAddCard);
 });
@@ -127,3 +119,8 @@ popupDescriptionCloseBtn.addEventListener("click", () => {
   // закрытие попапа редактирования профиля
   closePopup(popupDescription);
 });
+
+popupImageCloseBtn.addEventListener("click", () => {
+  // закрытие попапа просмотра увеличенной фотографии
+  closePopup(popupImage);
+})
