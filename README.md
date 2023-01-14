@@ -1,4 +1,4 @@
-# Проектная работа: "Место". Создана в рамках учёбы в [Яндекс.Практикум](https://practicum.yandex.ru) на факультете ["Веб-разработчик"](https://practicum.yandex.ru/web/). Спринты 4 — 7.
+# Проектная работа: "Место". Создана в рамках учёбы в [Яндекс.Практикум](https://practicum.yandex.ru) на факультете ["Веб-разработчик"](https://practicum.yandex.ru/web/). Спринты 4 — 8.
 
 ## Описание:
 
@@ -45,6 +45,21 @@
 - JS-свойство ValidityState
 - ООП
 
+## Этапы создания проектной работы:
+### Спринт 4
+
+### Спринт 5
+
+### Спринт 6
+
+### Спринт 7
+
+### Спринт 8
+
+- внесение элементов в разметку выделено в отдельный класс Section;
+-
+
+
 ## Скопировать репозиторий:
 
 git clone https://github.com/MikhailSulim/mesto.git
@@ -69,4 +84,5 @@ git clone https://github.com/MikhailSulim/mesto.git
 - [Чеклист проектной работы. Спринт 5.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-5.pdf)
 - [Чеклист проектной работы. Спринт 6.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-6.pdf)
 - [Чеклист проектной работы. Спринт 7.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-7.pdf)
+- [Чеклист проектной работы. Спринт 8.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-8.pdf)
 

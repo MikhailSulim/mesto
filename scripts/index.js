@@ -6,7 +6,9 @@ import  {validationConfig, cardTemplate, cardConfig, popupDescription, popupOpen
   popupImageDescription, popupImageCloseBtn, cardElements} from "./constants.js"
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
+import Section from "./section.js";
 
+const cardContainer = new Section(createNewCard, cardElements);
 
 // функции //
 function createNewCard(place) { // функция создания новой карточки
@@ -21,21 +23,7 @@ function createNewCard(place) { // функция создания новой к
       openPopup(popupImage);
     },
   });
-  return newCard;
-}
-
-function insertNewCard(where, card, mode) {  // функция добавления созданной карточки в разметку
-  switch(mode) {
-    case 'append':
-      where.append(card.generateCard());
-      break;
-    case 'prepend':
-      where.prepend(card.generateCard());
-      break;
-    default:
-      where.prepend(card.generateCard());
-      break;
-  }
+  return newCard.generateCard();
 }
 
 function openPopup(currentPopup) {
@@ -83,15 +71,12 @@ function sendAddNewCardForm(event) {
     link: popupFieldLink.value,
     description: `На фото - ${popupFieldPlace.value}`,
   };
-  insertNewCard(cardElements, createNewCard(newPlace), 'prepend');
+  cardContainer.addItem(createNewCard(newPlace), 'prepend');
   closePopup(popupAddCard);
 }
 
 // наполнение страницы контентом //
-initialCards.forEach((item) => {
-  insertNewCard(cardElements, createNewCard(item), 'append');
-});
-
+cardContainer.renderItems(initialCards);
 
 //   валидация   //
 // добавление валидации на попап редактирования профиля
