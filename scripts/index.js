@@ -6,9 +6,12 @@ import  {validationConfig, cardTemplate, cardConfig, popupDescription, popupOpen
   popupImageDescription, popupImageCloseBtn, cardElements} from "./constants.js"
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
-import Section from "./section.js";
+import Section from "./Section.js";
+import UserInfo from "./UserInfo.js";
 
+// создание экземпляров класса //
 const cardContainer = new Section(createNewCard, cardElements);
+const userInfo = new UserInfo(docNameElement, docSubtitleElement);
 
 // функции //
 function createNewCard(place) { // функция создания новой карточки
@@ -58,8 +61,7 @@ function closePopupByClickOverlay(event) {
 function sendDescriptionForm(event) {
   // функция отправки введённых значений из попапа в профиль
   event.preventDefault(); // отмена стандартной отправки формы.
-  docNameElement.textContent = popupFieldName.value;
-  docSubtitleElement.textContent = popupFieldSubtitle.value;
+  userInfo.setUserInfo({name: popupFieldName.value, about: popupFieldSubtitle.value});
   closePopup(popupDescription);
 }
 
@@ -91,8 +93,9 @@ validatorPopupAdd.enableValidation();
 // обработчики событий //
 popupOpenDescriptionBtn.addEventListener("click", () => {
   // открытие попапа редактирования профиля
-  popupFieldName.value = docNameElement.textContent;
-  popupFieldSubtitle.value = docSubtitleElement.textContent;
+  const {name: userName, about: userAbout} = userInfo.getUserInfo();
+  popupFieldName.value = userName;
+  popupFieldSubtitle.value = userAbout;
   validatorPopupDescription.clearErrors();
   openPopup(popupDescription);
 });
