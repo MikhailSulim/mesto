@@ -1,13 +1,21 @@
+/*
+Класс Card, создаёт карточку с текстом и ссылкой на изображение:
+  принимает в конструктор её данные и селектор её template-элемента;
+  содержит приватные методы, которые работают с разметкой, устанавливают слушателей событий;
+  содержит приватные методы для каждого обработчика;
+  содержит один публичный метод generateCard, который возвращает полностью работоспособный и наполненный данными элемент карточки.
+*/
+
 // класс создания карточки с фото и описанием
 export default class Card {
   constructor({ place, config, template, handleCardClick }) {
-    this._name = place.name;  // название карточки
-    this._link = place.link;  // ссылка на фотографию
+    this._name = place.name; // название карточки
+    this._link = place.link; // ссылка на фотографию
     this._description = place.description; // описание фотографии
 
-    this._cardSelector = template;  // селектор заготовки карточки
+    this._cardSelector = template; // селектор заготовки карточки
 
-    this._cardTitleSelector = config.cardTitle;  // селектор элемента названия карточки
+    this._cardTitleSelector = config.cardTitle; // селектор элемента названия карточки
     this._cardImgLinkSelector = config.cardImageLink; // селектор элемета фото карточки
     this._likeBtnSelector = config.likeButton; // селектор кнопки лайка
     this._deleteBtnSelector = config.deleteButton; // селектор кнопки удаления
@@ -48,7 +56,8 @@ export default class Card {
     this._deleteBtn = this._element.querySelector(this._deleteBtnSelector);
 
     this._image = this._element.querySelector(this._cardImgLinkSelector);
-    this._element.querySelector(this._cardTitleSelector).textContent = this._name;
+    this._element.querySelector(this._cardTitleSelector).textContent =
+      this._name;
 
     this._setEventListeners();
     this._image.src = this._link;

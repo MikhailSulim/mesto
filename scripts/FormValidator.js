@@ -1,3 +1,12 @@
+/*
+Класс FormValidator, настраивает валидацию полей формы:
+  принимает в конструктор объект настроек с селекторами и классами формы;
+  принимает вторым параметром элемент той формы, которая валидируется;
+  имеет приватные методы, которые обрабатывают форму: проверяют валидность поля,
+    изменяют состояние кнопки сабмита, устанавливают все обработчики;
+  имеет публичный метод enableValidation, который включает валидацию формы.
+*/
+
 // класс валидации всех полей формы
 export default class FormValidator {
   constructor(formSelectors, formElement) {
@@ -12,8 +21,12 @@ export default class FormValidator {
     this._errorClass = formSelectors.errorClass;
 
     // инпуты и кнопка
-    this._formInputs = [...this._formElement.querySelectorAll(this._inputSelector),];
-    this._formButton = this._formElement.querySelector(this._submitButtonSelector);
+    this._formInputs = [
+      ...this._formElement.querySelectorAll(this._inputSelector),
+    ];
+    this._formButton = this._formElement.querySelector(
+      this._submitButtonSelector
+    );
   }
 
   _setEveentListeners() {
@@ -27,7 +40,9 @@ export default class FormValidator {
 
   clearErrors() {
     // функция очистки ошибок валидации в случае, если попап был закрыт без сохранения
-    const inputs = this._formElement.querySelectorAll(`.${this._inputErrorClass}`);
+    const inputs = this._formElement.querySelectorAll(
+      `.${this._inputErrorClass}`
+    );
     const errors = this._formElement.querySelectorAll(`.${this._errorClass}`);
 
     inputs.forEach((input) => {
