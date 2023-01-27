@@ -1,5 +1,5 @@
 // импорт констант и классов
-import { initialCards } from "./content.js";
+import { initialCards } from "./../components/content.js";
 import {
   validationConfig,
   cardTemplate,
@@ -16,13 +16,15 @@ import {
   popupFieldLink,
   popupImage,
   cardElements,
-} from "./constants.js";
-import Card from "./Card.js";
-import FormValidator from "./FormValidator.js";
-import Section from "./Section.js";
-import UserInfo from "./UserInfo.js";
-import PopupWithImage from "./PopupWithImage.js";
-import PopupWithForm from "./PopupWithForm.js";
+} from "./../components/constants.js";
+import Card from "./../components/Card.js";
+import FormValidator from "./../components/FormValidator.js";
+import Section from "./../components/Section.js";
+import UserInfo from "./../components/UserInfo.js";
+import PopupWithImage from "./../components/PopupWithImage.js";
+import PopupWithForm from "./../components/PopupWithForm.js";
+
+import "./../pages/index.css";
 
 // создание экземпляров класса //
 const cardContainer = new Section(createNewCard, cardElements);

@@ -70,17 +70,21 @@
 - все константы вынесены в файл constants.js
 - внесение элементов в разметку выделено в отдельный класс Section;
 - добавлен класс UserInfo, в который переесено управление данными пользователя;
-- добавлен класс Popup и его наследники PopupWithForm и PpupWithImage, в которые перенесено создание и управление всеми модальными окнами.
+- добавлен класс Popup и его наследники PopupWithForm и PopupWithImage, в которые перенесено создание и управление всеми модальными окнами;
+- настроен сборщик проекта Webpack: все скрипты и стили объединены в один файл и подключаются в html сборщиком.
 
 
-## Скопировать репозиторий:
+## Клонировать репозиторий:
 
 git clone https://github.com/MikhailSulim/mesto.git
+
+## Собрать проект:
+
+npm run build
 
 ## Будущая доработка проекта будет включать в себя:
 
 - Дальнейший рефакторинг кода
-- Сборка проекта с помощью Webpack
 - Подключение бэкенда и сохранение данных о карточках на сервере
 - Возможность изменения фото на аватаре
 
@@ -98,4 +102,3 @@ git clone https://github.com/MikhailSulim/mesto.git
 - [Чеклист проектной работы. Спринт 6.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-6.pdf)
 - [Чеклист проектной работы. Спринт 7.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-7.pdf)
 - [Чеклист проектной работы. Спринт 8.](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-8.pdf)
-
