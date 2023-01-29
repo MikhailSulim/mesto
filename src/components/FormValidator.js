@@ -20,13 +20,10 @@ export default class FormValidator {
     this._inputErrorClass = formSelectors.inputErrorClass;
     this._errorClass = formSelectors.errorClass;
 
-    // инпуты и кнопка
-    this._formInputs = [
-      ...this._formElement.querySelectorAll(this._inputSelector),
-    ];
-    this._formButton = this._formElement.querySelector(
-      this._submitButtonSelector
-    );
+    // инпуты, ошибки и кнопка
+    this._formInputs = [...this._formElement.querySelectorAll(this._inputSelector)];
+    this._errors = [...this._formElement.querySelectorAll(this._errorClass)];
+    this._formButton = this._formElement.querySelector(this._submitButtonSelector);
   }
 
   _setEveentListeners() {
@@ -40,17 +37,10 @@ export default class FormValidator {
 
   clearErrors() {
     // функция очистки ошибок валидации в случае, если попап был закрыт без сохранения
-    const inputs = this._formElement.querySelectorAll(
-      `.${this._inputErrorClass}`
-    );
-    const errors = this._formElement.querySelectorAll(`.${this._errorClass}`);
-
-    inputs.forEach((input) => {
-      input.classList.remove(this._inputErrorClass);
-    });
-
-    errors.forEach((error) => {
-      error.textContent = "";
+    this._formInputs.forEach((input) => {
+      this._errors.forEach((error) => {
+        this._hideInputErrors(input, error);
+      });
     });
 
     this._disableSubmitBtn();
@@ -107,3 +97,35 @@ export default class FormValidator {
     this._setEveentListeners();
   }
 }
+
+/*  Универсальная валидация
+// Если будет интересно, можно универсально создать экземпляры валидаторов всех форм,
+// поместив их все в один объект, а потом брать из него валидатор по атрибуту name,
+// который задан для формы. Это очень универсально и для любого кол-ва форм подходит.
+
+const formValidators = {}
+
+// Включение валидации
+const enableValidation = (config) => {
+  const formList = Array.from(document.querySelectorAll(config.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(formElement, config)
+// получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name')
+
+   // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+   validator.enableValidation();
+  });
+};
+
+enableValidation(config);
+
+// И теперь можно использовать валидаторы для деактивации кнопки и тд
+
+formValidators[ profileForm.getAttribute('name') ].resetValidation()
+
+// или можно использовать строку (ведь Вы знаете, какой атрибут `name` у каждой формы)
+formValidators['profile-form'].resetValidation()
+
+*/

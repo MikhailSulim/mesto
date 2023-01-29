@@ -9,16 +9,15 @@
 */
 
 export default class UserInfo {
-  constructor(infoSelectors, aboutSelectors) {
-    this._profileNameElement = infoSelectors;
-    this._profileSubtitleElement = aboutSelectors;
+  constructor(profileNameElement, profileSubtitleElement) {
+    this._profileNameElement = profileNameElement;
+    this._profileSubtitleElement = profileSubtitleElement;
   }
 
-  setUserInfo(userData) {
+  setUserInfo({name, about}) {
     // метод получения новых данных профиля
-    const { name: userName, about: userAbout } = userData;
-    this._profileNameElement.textContent = userName;
-    this._profileSubtitleElement.textContent = userAbout;
+    this._profileNameElement.textContent = name;
+    this._profileSubtitleElement.textContent = about;
   }
 
   getUserInfo() {

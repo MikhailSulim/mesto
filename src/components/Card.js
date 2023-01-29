@@ -13,7 +13,7 @@ export default class Card {
     this._link = place.link; // ссылка на фотографию
     this._description = place.description; // описание фотографии
 
-    this._cardSelector = template; // селектор заготовки карточки
+    this._cardSelector = template; // 'селектор' заготовки карточки
 
     this._cardTitleSelector = config.cardTitle; // селектор элемента названия карточки
     this._cardImgLinkSelector = config.cardImageLink; // селектор элемета фото карточки

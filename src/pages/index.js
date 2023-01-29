@@ -1,5 +1,5 @@
 // импорт констант и классов
-import { initialCards } from "./../components/content.js";
+import { initialCards } from "../utils/content.js";
 import {
   validationConfig,
   cardTemplate,
@@ -12,45 +12,39 @@ import {
   docSubtitleElement,
   popupAddCard,
   popupOpenAddCardBtn,
-  popupFieldPlace,
-  popupFieldLink,
   popupImage,
   cardElements,
-} from "./../components/constants.js";
-import Card from "./../components/Card.js";
-import FormValidator from "./../components/FormValidator.js";
-import Section from "./../components/Section.js";
-import UserInfo from "./../components/UserInfo.js";
-import PopupWithImage from "./../components/PopupWithImage.js";
-import PopupWithForm from "./../components/PopupWithForm.js";
+} from "../utils/constants.js";
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
+import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
+import PopupWithImage from "../components/PopupWithImage.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 
-import "./../pages/index.css";
+import "./index.css";
 
 // создание экземпляров класса //
 const cardContainer = new Section(createNewCard, cardElements);
 const userInfo = new UserInfo(docNameElement, docSubtitleElement);
 const popupShowImage = new PopupWithImage(popupImage);
-const popupAddNewCard = new PopupWithForm(popupAddCard, () => {
-  const newPlace = {
-    name: popupFieldPlace.value,
-    link: popupFieldLink.value,
-    description: `На фото - ${popupFieldPlace.value}`,
-  };
+
+const popupAddNewCard = new PopupWithForm(popupAddCard, (newPlace) => {
   cardContainer.addItem(createNewCard(newPlace), "prepend");
   popupAddNewCard.close();
 });
 
-const popupUserProfile = new PopupWithForm(popupDescription, () => {
-  userInfo.setUserInfo({
-    name: popupFieldName.value,
-    about: popupFieldSubtitle.value,
-  });
+const popupUserProfile = new PopupWithForm(popupDescription, (userValue) => {
+  userInfo.setUserInfo(userValue);
   popupUserProfile.close();
 });
 
 // функции //
 function createNewCard(place) {
   // функция создания новой карточки
+  if (!("description" in place))
+    place.description = `На фото - ${place.name}`;
+
   const newCard = new Card({
     place: place,
     config: cardConfig,
@@ -87,10 +81,10 @@ popupShowImage.setEventListeners();
 
 popupOpenDescriptionBtn.addEventListener("click", () => {
   // открытие попапа редактирования профиля
-  const { name: userName, about: userAbout } = userInfo.getUserInfo();
+  const userData = userInfo.getUserInfo();
 
-  popupFieldName.value = userName;
-  popupFieldSubtitle.value = userAbout;
+  popupFieldName.value = userData.name;
+  popupFieldSubtitle.value = userData.about;
   validatorPopupDescription.clearErrors();
   popupUserProfile.open();
 });
