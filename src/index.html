@@ -133,6 +133,51 @@
       </div>
     </div>
 
+    <!-- удаление фото -->
+    <div class="popup popup_type_delete-photo">
+      <div class="popup__container">
+        <button
+          class="popup__close popup__close_type_delete-photo"
+          type="button"
+        ></button>
+
+        <form class="popup__content">
+          <h2 class="popup__title">Вы уверены?</h2>
+          <button class="popup__save popup__save_type_delete" type="submit">
+            Да
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- обновить аватар -->
+    <div class="popup popup_type_new-avatar">
+      <div class="popup__container">
+        <button
+          class="popup__close popup__close_type_new-avatar"
+          type="button"
+        ></button>
+        <form class="popup__content">
+          <h2 class="popup__title">Обновить аватар</h2>
+          <input
+            type="url"
+            id="input-link-avatar"
+            class="popup__input popup__input_field_link-avatar"
+            placeholder="Ссылка на аватар"
+            name="link"
+            required
+          />
+          <span id="input-link-avatar-error" class="popup__input-error"></span>
+          <button
+            class="popup__save popup__save_type_new-avatar popup__save_type_disabled"
+            type="submit"
+          >
+            Сохранить
+          </button>
+        </form>
+      </div>
+    </div>
+
     <!-- templates -->
     <template id="card-template">
       <li class="element">
