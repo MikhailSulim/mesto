@@ -9,9 +9,10 @@
 */
 
 export default class UserInfo {
-  constructor(profileNameElement, profileSubtitleElement) {
+  constructor(profileNameElement, profileSubtitleElement, avatarElement) {
     this._profileNameElement = profileNameElement;
     this._profileSubtitleElement = profileSubtitleElement;
+    this._avatarElement = avatarElement;
   }
 
   setUserInfo({name, about}) {
@@ -26,5 +27,11 @@ export default class UserInfo {
       name: this._profileNameElement.textContent,
       about: this._profileSubtitleElement.textContent,
     };
+  }
+
+  setUserAvatar({avatar}) {
+    // метод получения ссылки на новый аватар
+    console.log(avatar);
+    this._avatarElement.src = avatar;
   }
 }

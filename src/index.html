@@ -19,7 +19,10 @@
     <main class="content">
       <section class="profile">
         <div class="profile__container">
-          <div class="profile__avatar"></div>
+          <div class="profile__avatar">
+            <img src="<%=require('./images/avatar.jpg')%>" alt="Аватар пользователя" class="profile__avatar-img">
+            <button type="button" class="profile__avatar-btn"></button>
+          </div>
           <div class="profile__info">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
             <button class="profile__edit-button" type="button"></button>
@@ -164,7 +167,7 @@
             id="input-link-avatar"
             class="popup__input popup__input_field_link-avatar"
             placeholder="Ссылка на аватар"
-            name="link"
+            name="avatar"
             required
           />
           <span id="input-link-avatar-error" class="popup__input-error"></span>

@@ -27,6 +27,14 @@ const docSubtitleElement = document.querySelector(".profile__subtitle"); // по
 const popupDescriptionCloseBtn = popupDescription.querySelector(".popup__close"); // кнопка закрытия
 const formElementDescription = popupDescription.querySelector(".popup__content"); // часть попапа редактирования профиля с контентом
 
+// редактирование аватара в профиле пользователя
+const popupAvatar = document.querySelector(".popup_type_new-avatar"); // попап смены аватара в профиле
+const popupOpenAvatarBtn = document.querySelector(".profile__avatar-btn"); // кнопка открытия попапа смены аватара в профиле
+const avatarImg = document.querySelector(".profile__avatar-img"); // картинка на аватаре пользователя
+const popupFieldLinkAvatar = popupAvatar.querySelector(".popup__input_field_link-avatar"); // поле ввода ссылки на новый аватар
+const popupAvatarCloseBtn = popupAvatar.querySelector(".popup__close"); // кнопка закрытия попапа смены аватара
+const formElementAvatar = popupAvatar.querySelector(".popup__content"); // форма попапа смены аватара
+
 // добавление новой карточки
 const popupAddCard = document.querySelector(".popup_type_add-card"); // попап добавления новой карточки
 const popupOpenAddCardBtn = document.querySelector(".add-button"); // кнопка открытия попапа добавления новой карточки
@@ -45,4 +53,5 @@ const cardElements = document.querySelector(".elements__container");
 export {validationConfig, cardTemplate, cardConfig, popupDescription, popupOpenDescriptionBtn, popupFieldName, docNameElement, popupFieldSubtitle,
   docSubtitleElement, popupDescriptionCloseBtn, formElementDescription, popupAddCard, popupOpenAddCardBtn,
   popupAddCardCloseBtn, popupFieldPlace, popupFieldLink, formElementAddCard, popupImage, popupImageLink,
-  popupImageDescription, popupImageCloseBtn, cardElements}
+  popupImageDescription, popupImageCloseBtn, cardElements,
+  popupAvatar, popupOpenAvatarBtn, avatarImg, popupFieldLinkAvatar, popupAvatarCloseBtn , formElementAvatar}

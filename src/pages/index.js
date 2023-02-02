@@ -14,6 +14,12 @@ import {
   popupOpenAddCardBtn,
   popupImage,
   cardElements,
+  popupAvatar,
+  popupOpenAvatarBtn,
+  avatarImg,
+  popupFieldLinkAvatar,
+  popupAvatarCloseBtn,
+  formElementAvatar,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -24,9 +30,9 @@ import PopupWithForm from "../components/PopupWithForm.js";
 
 import "./index.css";
 
-// создание экземпляров класса //
+/*------------------ создание экземпляров класса ------------------*/
 const cardContainer = new Section(createNewCard, cardElements);
-const userInfo = new UserInfo(docNameElement, docSubtitleElement);
+const userInfo = new UserInfo(docNameElement, docSubtitleElement, avatarImg);
 const popupShowImage = new PopupWithImage(popupImage);
 
 const popupAddNewCard = new PopupWithForm(popupAddCard, (newPlace) => {
@@ -39,11 +45,15 @@ const popupUserProfile = new PopupWithForm(popupDescription, (userValue) => {
   popupUserProfile.close();
 });
 
-// функции //
+const popupNewAvatar = new PopupWithForm(popupAvatar, (userValue) => {
+  userInfo.setUserAvatar(userValue);
+  popupNewAvatar.close();
+});
+
+/*------------------ функции ------------------*/
 function createNewCard(place) {
   // функция создания новой карточки
-  if (!("description" in place))
-    place.description = `На фото - ${place.name}`;
+  if (!("description" in place)) place.description = `На фото - ${place.name}`;
 
   const newCard = new Card({
     place: place,
@@ -55,13 +65,14 @@ function createNewCard(place) {
 }
 
 function handleCardClick(imgName, imgLink, imgDescription) {
+  // функция открытия попапа при клике по фото
   popupShowImage.open(imgName, imgLink, imgDescription);
 }
 
-// наполнение страницы контентом //
+/*------------------ наполнение страницы контентом ------------------*/
 cardContainer.renderItems(initialCards);
 
-//   валидация   //
+/*------------------ валидация ------------------*/
 // добавление валидации на попап редактирования профиля
 const validatorPopupDescription = new FormValidator(
   validationConfig,
@@ -73,11 +84,16 @@ validatorPopupDescription.enableValidation();
 const validatorPopupAdd = new FormValidator(validationConfig, popupAddCard);
 validatorPopupAdd.enableValidation();
 
-// обработчики событий //
+// добавление валидации на попап замены аватара
+const validatorPopupAvatar = new FormValidator(validationConfig, popupAvatar);
+validatorPopupAvatar.enableValidation();
+
+/*------------------ обработчики событий ------------------*/
 // навешивание слушателей для созданных классов
 popupAddNewCard.setEventListeners();
 popupUserProfile.setEventListeners();
 popupShowImage.setEventListeners();
+popupNewAvatar.setEventListeners();
 
 popupOpenDescriptionBtn.addEventListener("click", () => {
   // открытие попапа редактирования профиля
@@ -93,4 +109,10 @@ popupOpenAddCardBtn.addEventListener("click", () => {
   // открытие попапа добавления карточки
   validatorPopupAdd.clearErrors();
   popupAddNewCard.open();
+});
+
+popupOpenAvatarBtn.addEventListener("click", () => {
+  // открытие попапа смены аватара
+  validatorPopupAvatar.clearErrors();
+  popupNewAvatar.open();
 });
