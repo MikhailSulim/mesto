@@ -27,6 +27,16 @@ export default class PopupWithForm extends Popup {
     return this._inputValues;
   }
 
+  setSubmitBtnText(text) {  // функция для уведомления пользователя о процессе загрузки данных на сервер
+    this._submitBtn.textContent = text;
+  }
+  // submit(action) {
+  //   this._popup.addEventListener("submit", (event) => {
+  //     event.preventDefault();
+  //     this._submitForm(action);
+  //   })
+  // }
+
   setEventListeners() {
     super.setEventListeners();
     this._popup.addEventListener("submit", (event) => {

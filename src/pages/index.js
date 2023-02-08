@@ -1,5 +1,7 @@
 // импорт констант и классов
-import { initialCards } from "../utils/content.js";
+import Api from "../components/api.js";
+import { cohort, token } from "./../utils/authorizationConfig.js";
+// import { initialCards } from "../utils/content.js";
 import {
   validationConfig,
   cardTemplate,
@@ -17,9 +19,8 @@ import {
   popupAvatar,
   popupOpenAvatarBtn,
   avatarImg,
-  popupFieldLinkAvatar,
-  popupAvatarCloseBtn,
-  formElementAvatar,
+  popupDelConfirm,
+  popupDelConfirmCloseBtn,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -31,24 +32,67 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import "./index.css";
 
 /*------------------ создание экземпляров класса ------------------*/
+const api = new Api({
+  serverUrl: `https://mesto.nomoreparties.co/v1/${cohort}`, // класс API
+  headers: {
+    authorization: token,
+    "Content-Type": "application/json",
+  },
+});
+
 const cardContainer = new Section(createNewCard, cardElements);
 const userInfo = new UserInfo(docNameElement, docSubtitleElement, avatarImg);
 const popupShowImage = new PopupWithImage(popupImage);
 
 const popupAddNewCard = new PopupWithForm(popupAddCard, (newPlace) => {
-  cardContainer.addItem(createNewCard(newPlace), "prepend");
-  popupAddNewCard.close();
+  popupAddNewCard.setSubmitBtnText("Сохранение...");
+  api
+    .createCard(newPlace)
+    .then((res) => {
+      // console.log("response =>", res);
+      cardContainer.addItem(createNewCard(newPlace), "prepend");
+    })
+    .finally(() => {
+      popupAddNewCard.setSubmitBtnText("Создать");
+      popupAddNewCard.close();
+    });
 });
+// const popupAddNewCard = new PopupWithForm(popupAddCard, (newPlace) => {
+//   cardContainer.addItem(createNewCard(newPlace), "prepend");
+//   popupAddNewCard.close();
+// });
 
 const popupUserProfile = new PopupWithForm(popupDescription, (userValue) => {
-  userInfo.setUserInfo(userValue);
-  popupUserProfile.close();
+  popupUserProfile.setSubmitBtnText("Сохранение...");
+  api.setUserInfo(userValue)
+  .then(res => {
+    console.log("response =>", res);
+    // res.name = userValue.name;
+    // res.about = userValue.about;
+    userInfo.setUserInfo(userValue);
+  })
+  .finally(() => {
+    popupUserProfile.setSubmitBtnText("Сохранить");
+    popupUserProfile.close();
+  })
 });
 
 const popupNewAvatar = new PopupWithForm(popupAvatar, (userValue) => {
-  userInfo.setUserAvatar(userValue);
-  popupNewAvatar.close();
+  popupNewAvatar.setSubmitBtnText("Сохранение...");
+  api.setUserAvatar(userValue)
+  .then(res => {
+    console.log("newAvatar", res, userValue);
+    userInfo.setUserAvatar(userValue);
+  })
+  .finally(() => {
+    popupNewAvatar.setSubmitBtnText("Сохранение...");
+    popupNewAvatar.close();
+  })
+
+  // userInfo.setUserAvatar(userValue);
 });
+
+const popupDeleteCardConfirm = new PopupWithForm(popupDelConfirm);
 
 /*------------------ функции ------------------*/
 function createNewCard(place) {
@@ -60,6 +104,7 @@ function createNewCard(place) {
     config: cardConfig,
     template: cardTemplate,
     handleCardClick: handleCardClick,
+    handleCardDelete: handleCardDelete,
   });
   return newCard.generateCard();
 }
@@ -69,8 +114,28 @@ function handleCardClick(imgName, imgLink, imgDescription) {
   popupShowImage.open(imgName, imgLink, imgDescription);
 }
 
+function handleCardDelete(event) {
+  // функция открытия попапа подтверждения удаления карточки
+  console.log(event);
+  popupDeleteCardConfirm.open();
+  event.target.closest(".element").remove();
+}
+
 /*------------------ наполнение страницы контентом ------------------*/
-cardContainer.renderItems(initialCards);
+// cardContainer.renderItems(initialCards);
+api.getCard().then((res) => { // получение карточек с сервера и вставка их в страницу
+  cardContainer.renderItems(res);
+  console.log(res);
+});
+
+api.getUserInfo()
+  .then((res) => { // получение имени и описания пользователя и вставка их в страницу
+    // console.log("response =>", res);
+    userInfo.setUserInfo({name: res.name, about: res.about});
+    userInfo.setUserAvatar({avatar: res.avatar});
+    // userInfo.setUserAvatar({avatar: res.avatar});
+  });
+
 
 /*------------------ валидация ------------------*/
 // добавление валидации на попап редактирования профиля
@@ -94,6 +159,7 @@ popupAddNewCard.setEventListeners();
 popupUserProfile.setEventListeners();
 popupShowImage.setEventListeners();
 popupNewAvatar.setEventListeners();
+popupDeleteCardConfirm.setEventListeners();
 
 popupOpenDescriptionBtn.addEventListener("click", () => {
   // открытие попапа редактирования профиля

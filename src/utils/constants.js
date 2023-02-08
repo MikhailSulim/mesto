@@ -14,6 +14,7 @@ const cardConfig = {
   cardTitle: ".element__title", // название фото
   cardImageLink: ".element__img", // ссылка на фото
   likeButton: ".element__like", // кнопка лайка
+  likeCount: "element__like-count", // текст счётчика лайков
   deleteButton: ".element__delete", // кнопка удаления
 };
 
@@ -43,6 +44,11 @@ const popupFieldPlace = popupAddCard.querySelector(".popup__input_field_place");
 const popupFieldLink = popupAddCard.querySelector(".popup__input_field_link"); // поле ввода ссылки на фото
 const formElementAddCard = popupAddCard.querySelector(".popup__content"); // часть попапа добавления карточки
 
+// подтверждение удаления карточки
+const popupDelConfirm = document.querySelector(".popup_type_delete-photo"); // попап подтверждения удаления карточки
+const popupDelConfirmCloseBtn = popupDelConfirm.querySelector(".popup__close"); // кнопка закрытия попапа
+
+
 const popupImage = document.querySelector(".popup_type_image");
 const popupImageLink = popupImage.querySelector(".popup__image");
 const popupImageDescription = popupImage.querySelector(".popup__image-caption");
@@ -53,5 +59,5 @@ const cardElements = document.querySelector(".elements__container");
 export {validationConfig, cardTemplate, cardConfig, popupDescription, popupOpenDescriptionBtn, popupFieldName, docNameElement, popupFieldSubtitle,
   docSubtitleElement, popupDescriptionCloseBtn, formElementDescription, popupAddCard, popupOpenAddCardBtn,
   popupAddCardCloseBtn, popupFieldPlace, popupFieldLink, formElementAddCard, popupImage, popupImageLink,
-  popupImageDescription, popupImageCloseBtn, cardElements,
-  popupAvatar, popupOpenAvatarBtn, avatarImg, popupFieldLinkAvatar, popupAvatarCloseBtn , formElementAvatar}
+  popupImageDescription, popupImageCloseBtn, cardElements, popupAvatar, popupOpenAvatarBtn, avatarImg, popupFieldLinkAvatar, popupAvatarCloseBtn , formElementAvatar,
+  popupDelConfirm, popupDelConfirmCloseBtn, }

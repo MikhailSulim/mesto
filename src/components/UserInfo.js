@@ -5,7 +5,7 @@
     элемента имени пользователя и элемента информации о себе.
   Содержит публичный метод getUserInfo, который возвращает объект с данными пользователя.
   Этот метод необходим для подстановки данных пользователя в форму при открытии.
-  Содержит публичный метод setUserInfo, который принимает новые данные пользователя и добавляет их на страницу.
+  Содержит публичные методы setUserInfo и setUserAvatar, которые принимают новые данные пользователя и добавляют их на страницу.
 */
 
 export default class UserInfo {
@@ -16,16 +16,17 @@ export default class UserInfo {
   }
 
   setUserInfo({name, about}) {
-    // метод получения новых данных профиля
+    // метод получения новых данных профиля - вставляет их в элементы на странице
     this._profileNameElement.textContent = name;
     this._profileSubtitleElement.textContent = about;
   }
 
   getUserInfo() {
-    // метод возвращения данных пользователя
+    // метод возвращения данных пользователя - читает их с элементов на странице
     return {
       name: this._profileNameElement.textContent,
       about: this._profileSubtitleElement.textContent,
+      // avatar: this._avatarElement.src,
     };
   }
 

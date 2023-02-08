@@ -6,9 +6,15 @@
   содержит один публичный метод generateCard, который возвращает полностью работоспособный и наполненный данными элемент карточки.
 */
 
-// класс создания карточки с фото и описанием
 export default class Card {
-  constructor({ place, config, template, handleCardClick }) {
+  constructor({
+    place,
+    config,
+    template,
+    handleCardClick,
+    handleCardDelete,
+    handleLikeClick,
+  }) {
     this._name = place.name; // название карточки
     this._link = place.link; // ссылка на фотографию
     this._description = place.description; // описание фотографии
@@ -21,6 +27,8 @@ export default class Card {
     this._deleteBtnSelector = config.deleteButton; // селектор кнопки удаления
 
     this._handleCardClick = handleCardClick; // функция клика по карточке
+    this._handleCardDelete = handleCardDelete; // функция клика по значку удаления
+    this._handleLikeClick = handleLikeClick; // функция клика по значку лайка
   }
 
   _getTemplate() {
@@ -39,14 +47,17 @@ export default class Card {
     });
 
     // обработчик нажатия на кнопку удаления
-    this._deleteBtn.addEventListener("click", () => {
-      this._element.closest(".element").remove();
-    });
+    this._deleteBtn.addEventListener("click", () => this._handleCardDelete);
+    // this._element.closest(".element").remove();
 
     // обработчик нажатия на фото для появления попапа с полноразмерной версией
     this._image.addEventListener("click", () => {
       this._handleCardClick(this._name, this._link, this._description);
     });
+  }
+
+  deleteCard() {   // функция удаления карточки из браузера
+    this._element.closest(".element").remove();
   }
 
   generateCard() {
