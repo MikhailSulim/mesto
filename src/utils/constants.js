@@ -14,7 +14,7 @@ const cardConfig = {
   cardTitle: ".element__title", // название фото
   cardImageLink: ".element__img", // ссылка на фото
   likeButton: ".element__like", // кнопка лайка
-  likeCount: "element__like-count", // текст счётчика лайков
+  likeCount: ".element__like-count", // текст счётчика лайков
   deleteButton: ".element__delete", // кнопка удаления
 };
 

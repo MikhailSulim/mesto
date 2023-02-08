@@ -4,8 +4,8 @@ export default class Api {
     this._headers = headers;
   }
 
-  // TODO удаление карточки
-  // TODO счетчик лайков
+  // TODO функция поставить лайк
+  // TODO функция удалить лайк
 
   _checkResponse(res) {
     // функция проверки статуса запроса с сервера
@@ -14,8 +14,9 @@ export default class Api {
       : Promise.reject(`${res.status} ${res.statusText}`);
   }
 
-  getCard() {
-    // функция получения массива карточек с сервера
+  /* ----------- получение данных с сервера --------------- */
+  getCards() {
+    // функция получения массива данных карточек с сервера
     return (
       fetch(`${this._serverUrl}/cards`, {
         method: "GET",
@@ -29,7 +30,24 @@ export default class Api {
     );
   }
 
+  getUserInfo() {
+    // функция получения данных о залогиненном пользователе с сервера
+    return fetch(`${this._serverUrl}/users/me`, {
+      method: "GET",
+      headers: this._headers,
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
+  }
+
+  getAllData() {
+    // функция получения всех данных
+    return Promise.all([this.getCards(), this.getUserInfo()]);
+  }
+
+  /* -------------- отправка данных на сервер --------------------*/
   createCard(place) {
+    // функция отправки на сервер данных о новой карточке
     return fetch(`${this._serverUrl}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -42,17 +60,8 @@ export default class Api {
       .catch((err) => console.log(err));
   }
 
-  getUserInfo() {
-    // функция получения данных о залогиненном пользователе с сервера
-    return fetch(`${this._serverUrl}/users/me`, {
-      method: "GET",
-      headers: this._headers,
-    })
-      .then(this._checkResponse)
-      .catch((err) => console.log(err));
-  }
-
   setUserInfo(userData) {
+    // функция замены данных о пользователе на сервере
     return fetch(`${this._serverUrl}/users/me`, {
       method: "PATCH",
       headers: this._headers,
@@ -66,12 +75,24 @@ export default class Api {
   }
 
   setUserAvatar(newAvatar) {
+    // функция замены данных об аватаре пользователя
     return fetch(`${this._serverUrl}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
         avatar: newAvatar.avatar,
       }),
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
+  }
+
+  /* -------------- удаление данных на сервере -------------*/
+  deleteCard(cardId) {
+    // функция удаления данных выбранной карточки с сервера
+    return fetch(`${this._serverUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: this._headers,
     })
       .then(this._checkResponse)
       .catch((err) => console.log(err));

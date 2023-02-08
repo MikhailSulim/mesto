@@ -28,6 +28,7 @@ import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 import "./index.css";
 
@@ -44,23 +45,19 @@ const cardContainer = new Section(createNewCard, cardElements);
 const userInfo = new UserInfo(docNameElement, docSubtitleElement, avatarImg);
 const popupShowImage = new PopupWithImage(popupImage);
 
-const popupAddNewCard = new PopupWithForm(popupAddCard, (newPlace) => {
+const popupAddNewCard = new PopupWithForm(popupAddCard, (newCardData) => {
   popupAddNewCard.setSubmitBtnText("Сохранение...");
   api
-    .createCard(newPlace)
-    .then((res) => {
-      // console.log("response =>", res);
-      cardContainer.addItem(createNewCard(newPlace), "prepend");
+    .createCard(newCardData)
+    .then((newCardData) => {
+      cardContainer.addItem(createNewCard(newCardData), "prepend");
     })
     .finally(() => {
       popupAddNewCard.setSubmitBtnText("Создать");
       popupAddNewCard.close();
     });
 });
-// const popupAddNewCard = new PopupWithForm(popupAddCard, (newPlace) => {
-//   cardContainer.addItem(createNewCard(newPlace), "prepend");
-//   popupAddNewCard.close();
-// });
+
 
 const popupUserProfile = new PopupWithForm(popupDescription, (userValue) => {
   popupUserProfile.setSubmitBtnText("Сохранение...");
@@ -92,19 +89,35 @@ const popupNewAvatar = new PopupWithForm(popupAvatar, (userValue) => {
   // userInfo.setUserAvatar(userValue);
 });
 
-const popupDeleteCardConfirm = new PopupWithForm(popupDelConfirm);
+const popupDeleteCardConfirm = new PopupWithConfirmation(popupDelConfirm);
 
 /*------------------ функции ------------------*/
-function createNewCard(place) {
+function createNewCard(cardData) {
   // функция создания новой карточки
-  if (!("description" in place)) place.description = `На фото - ${place.name}`;
-
+  if (!("description" in cardData)) cardData.description = `На фото - ${cardData.name}`;
+// console.log("cardData=>", cardData);
   const newCard = new Card({
-    place: place,
+    cardData:cardData,
     config: cardConfig,
+    userId: userInfo.getUserId(),
     template: cardTemplate,
     handleCardClick: handleCardClick,
-    handleCardDelete: handleCardDelete,
+    handleCardDelete: (evt) => {
+      const cardId = cardData._id;
+      const cardElement = evt.target.closest(".element");
+      popupDeleteCardConfirm.open();
+      popupDeleteCardConfirm.updateSubmit(() => {
+        api.deleteCard(cardId)
+        .then(() => {
+          cardElement.remove();
+          popupDeleteCardConfirm.close();
+        })
+      })
+
+
+
+    }
+
   });
   return newCard.generateCard();
 }
@@ -116,25 +129,41 @@ function handleCardClick(imgName, imgLink, imgDescription) {
 
 function handleCardDelete(event) {
   // функция открытия попапа подтверждения удаления карточки
-  console.log(event);
+  // console.log(event);
   popupDeleteCardConfirm.open();
-  event.target.closest(".element").remove();
+  // api.deleteCard(cardId)
+  // .then(res => {
+  //   console.log("resDel =>",res)
+  // })
+  // event.target.closest(".element").remove();
 }
 
 /*------------------ наполнение страницы контентом ------------------*/
 // cardContainer.renderItems(initialCards);
-api.getCard().then((res) => { // получение карточек с сервера и вставка их в страницу
-  cardContainer.renderItems(res);
-  console.log(res);
-});
 
-api.getUserInfo()
-  .then((res) => { // получение имени и описания пользователя и вставка их в страницу
-    // console.log("response =>", res);
-    userInfo.setUserInfo({name: res.name, about: res.about});
-    userInfo.setUserAvatar({avatar: res.avatar});
-    // userInfo.setUserAvatar({avatar: res.avatar});
-  });
+api.getAllData()
+.then((res) => {
+  const [initialCards, userData] = res;
+  // console.log("userData=>", userData)
+  // userInfo.setUserInfo({name: userData.name, about: userData.about, avatar: userData.avatar, userId: userData._id});
+  userInfo.setUserInfo({name: userData.name, about: userData.about, userId: userData._id});
+  userInfo.setUserAvatar({avatar: userData.avatar});
+  cardContainer.renderItems(initialCards);
+}).catch(err => console.error(err)
+);
+
+// api.getCards().then((res) => { // получение карточек с сервера и вставка их в страницу
+//   cardContainer.renderItems(res);
+//   console.log(res);
+// });
+
+// api.getUserInfo()
+//   .then((res) => { // получение имени и описания пользователя и вставка их в страницу
+//     // console.log("response =>", res);
+//     userInfo.setUserInfo({name: res.name, about: res.about});
+//     userInfo.setUserAvatar({avatar: res.avatar});
+//     // userInfo.setUserAvatar({avatar: res.avatar});
+//   });
 
 
 /*------------------ валидация ------------------*/

@@ -8,16 +8,21 @@
 
 export default class Card {
   constructor({
-    place,
+    cardData,
     config,
+    userId,
     template,
     handleCardClick,
     handleCardDelete,
     handleLikeClick,
   }) {
-    this._name = place.name; // название карточки
-    this._link = place.link; // ссылка на фотографию
-    this._description = place.description; // описание фотографии
+    this._name = cardData.name; // название карточки
+    this._link = cardData.link; // ссылка на фотографию
+    this._description = cardData.description; // описание фотографии
+    this._likes = cardData.likes; // массив лайков карточки
+    this._cardId = cardData._id; // идентификатор карточки
+    this._userId = userId; // идентификатор пользователя
+    this._cardOwner = cardData.owner._id; // идентификатор создателя карточки
 
     this._cardSelector = template; // 'селектор' заготовки карточки
 
@@ -25,6 +30,7 @@ export default class Card {
     this._cardImgLinkSelector = config.cardImageLink; // селектор элемета фото карточки
     this._likeBtnSelector = config.likeButton; // селектор кнопки лайка
     this._deleteBtnSelector = config.deleteButton; // селектор кнопки удаления
+    this._likeCount = config.likeCount; // селектор поля для вывода числа лайков
 
     this._handleCardClick = handleCardClick; // функция клика по карточке
     this._handleCardDelete = handleCardDelete; // функция клика по значку удаления
@@ -45,10 +51,24 @@ export default class Card {
     this._likeBtn.addEventListener("click", () => {
       this._likeBtn.classList.toggle("element__like_is-liked");
     });
+// console.log(this._userId, this._cardOwner)
+    if (this._userId === this._cardOwner) {
+      this._deleteBtn.addEventListener("click", (evt) => this._handleCardDelete(evt));
+    } else {
+      this._deleteBtn.remove();
 
+    }
     // обработчик нажатия на кнопку удаления
-    this._deleteBtn.addEventListener("click", () => this._handleCardDelete);
     // this._element.closest(".element").remove();
+
+    // if (!this._isUserCard) {
+    //   this._cardDelButton.remove();
+    //   this._cardDelButton = null;
+    // } else {
+    //   this._cardElement.querySelector('.card__del-button').addEventListener('click', (event) => {
+    //     this._handleRemoveButton(event);
+    //   });
+    // }
 
     // обработчик нажатия на фото для появления попапа с полноразмерной версией
     this._image.addEventListener("click", () => {
@@ -56,19 +76,23 @@ export default class Card {
     });
   }
 
-  deleteCard() {   // функция удаления карточки из браузера
-    this._element.closest(".element").remove();
-  }
+  // deleteCard() {
+  //   // функция удаления карточки из браузера
+  //   this._element.closest(".element").remove();
+  // }
 
   generateCard() {
     // функция создания карточки
-    this._element = this._getTemplate();
-    this._likeBtn = this._element.querySelector(this._likeBtnSelector);
-    this._deleteBtn = this._element.querySelector(this._deleteBtnSelector);
+    this._element = this._getTemplate(); // элемент самой карточки
+    this._likeBtn = this._element.querySelector(this._likeBtnSelector); // элемент кнопка лайка
+    this._deleteBtn = this._element.querySelector(this._deleteBtnSelector); // элемент кнопка удаления
+    this._likeCountElement = this._element.querySelector(this._likeCount); // элемент вывода числа лайков
+    this._image = this._element.querySelector(this._cardImgLinkSelector); // элемент изображения на карточке
 
-    this._image = this._element.querySelector(this._cardImgLinkSelector);
-    this._element.querySelector(this._cardTitleSelector).textContent =
-      this._name;
+    this._element.querySelector(this._cardTitleSelector).textContent = this._name;
+    this._likeCountElement.textContent = this._likes.length;
+
+
 
     this._setEventListeners();
     this._image.src = this._link;
