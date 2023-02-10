@@ -27,17 +27,13 @@ export default class PopupWithForm extends Popup {
     return this._inputValues;
   }
 
-  setSubmitBtnText(text) {  // функция для уведомления пользователя о процессе загрузки данных на сервер
+  setSubmitBtnText(text) {
+    // функция замены текста на кнопке для лоадера
     this._submitBtn.textContent = text;
   }
-  // submit(action) {
-  //   this._popup.addEventListener("submit", (event) => {
-  //     event.preventDefault();
-  //     this._submitForm(action);
-  //   })
-  // }
 
   setEventListeners() {
+    // переопределённые слушатели
     super.setEventListeners();
     this._popup.addEventListener("submit", (event) => {
       event.preventDefault();

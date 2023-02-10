@@ -21,9 +21,13 @@ export default class FormValidator {
     this._errorClass = formSelectors.errorClass;
 
     // инпуты, ошибки и кнопка
-    this._formInputs = [...this._formElement.querySelectorAll(this._inputSelector)];
+    this._formInputs = [
+      ...this._formElement.querySelectorAll(this._inputSelector),
+    ];
     this._errors = [...this._formElement.querySelectorAll(this._errorClass)];
-    this._formButton = this._formElement.querySelector(this._submitButtonSelector);
+    this._formButton = this._formElement.querySelector(
+      this._submitButtonSelector
+    );
   }
 
   _setEveentListeners() {

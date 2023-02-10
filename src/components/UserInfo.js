@@ -15,11 +15,10 @@ export default class UserInfo {
     this._avatarElement = avatarElement;
   }
 
-  setUserInfo({name, about, avatar, userId}) {
+  setUserInfo({ name, about, avatar, userId }) {
     // метод получения новых данных профиля - вставляет их в элементы на странице
     this._profileNameElement.textContent = name;
     this._profileSubtitleElement.textContent = about;
-    this._avatarElement.src = avatar;
     this._profileId = userId;
   }
 
@@ -28,18 +27,16 @@ export default class UserInfo {
     return {
       name: this._profileNameElement.textContent,
       about: this._profileSubtitleElement.textContent,
-      // avatar: this._avatarElement.src,
     };
   }
 
-  getUserId() { // получить идентификатор пользователя
-    // console.log("this._profileId =>", this._profileId)
+  getUserId() {
+    // получить идентификатор пользователя
     return this._profileId;
   }
 
-  setUserAvatar({avatar}) {
+  setUserAvatar({ avatar }) {
     // метод получения ссылки на новый аватар
-    // console.log(avatar);
     this._avatarElement.src = avatar;
   }
 }

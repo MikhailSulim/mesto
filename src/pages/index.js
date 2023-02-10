@@ -1,7 +1,6 @@
 // импорт констант и классов
 import Api from "../components/api.js";
 import { cohort, token } from "./../utils/authorizationConfig.js";
-// import { initialCards } from "../utils/content.js";
 import {
   validationConfig,
   cardTemplate,
@@ -20,7 +19,6 @@ import {
   popupOpenAvatarBtn,
   avatarImg,
   popupDelConfirm,
-  popupDelConfirmCloseBtn,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -43,8 +41,9 @@ const api = new Api({
 
 const cardContainer = new Section(createNewCard, cardElements);
 const userInfo = new UserInfo(docNameElement, docSubtitleElement, avatarImg);
-const popupShowImage = new PopupWithImage(popupImage);
 
+// классы попапов
+const popupShowImage = new PopupWithImage(popupImage);
 const popupAddNewCard = new PopupWithForm(popupAddCard, (newCardData) => {
   popupAddNewCard.setSubmitBtnText("Сохранение...");
   api
@@ -57,129 +56,109 @@ const popupAddNewCard = new PopupWithForm(popupAddCard, (newCardData) => {
       popupAddNewCard.close();
     });
 });
-
-
 const popupUserProfile = new PopupWithForm(popupDescription, (userValue) => {
   popupUserProfile.setSubmitBtnText("Сохранение...");
-  api.setUserInfo(userValue)
-  .then(res => {
-    console.log("response =>", res);
-    // res.name = userValue.name;
-    // res.about = userValue.about;
-    userInfo.setUserInfo(userValue);
-  })
-  .finally(() => {
-    popupUserProfile.setSubmitBtnText("Сохранить");
-    popupUserProfile.close();
-  })
+  api
+    .setUserInfo(userValue)
+    .then((res) => {
+      userInfo.setUserInfo(userValue);
+    })
+    .finally(() => {
+      popupUserProfile.close();
+      popupUserProfile.setSubmitBtnText("Сохранить");
+    });
 });
-
 const popupNewAvatar = new PopupWithForm(popupAvatar, (userValue) => {
   popupNewAvatar.setSubmitBtnText("Сохранение...");
-  api.setUserAvatar(userValue)
-  .then(res => {
-    console.log("newAvatar", res, userValue);
-    userInfo.setUserAvatar(userValue);
-  })
-  .finally(() => {
-    popupNewAvatar.setSubmitBtnText("Сохранение...");
-    popupNewAvatar.close();
-  })
-
-  // userInfo.setUserAvatar(userValue);
+  api
+    .setUserAvatar(userValue)
+    .then((res) => {
+      userInfo.setUserAvatar(userValue);
+    })
+    .finally(() => {
+      popupNewAvatar.close();
+      popupNewAvatar.setSubmitBtnText("Сохранить");
+    });
 });
-
 const popupDeleteCardConfirm = new PopupWithConfirmation(popupDelConfirm);
+
+// классы валидации
+const validatorPopupDescription = new FormValidator(validationConfig, popupDescription);
+const validatorPopupAdd = new FormValidator(validationConfig, popupAddCard);
+const validatorPopupAvatar = new FormValidator(validationConfig, popupAvatar);
+
 
 /*------------------ функции ------------------*/
 function createNewCard(cardData) {
   // функция создания новой карточки
-  if (!("description" in cardData)) cardData.description = `На фото - ${cardData.name}`;
-// console.log("cardData=>", cardData);
+  if (!("description" in cardData))
+    cardData.description = `На фото - ${cardData.name}`;
   const newCard = new Card({
-    cardData:cardData,
+    cardData: cardData,
     config: cardConfig,
     userId: userInfo.getUserId(),
     template: cardTemplate,
-    handleCardClick: handleCardClick,
+    handleCardClick: () => {
+      // колбек открытия попапа при клике по фото
+      popupShowImage.open(cardData.name, cardData.link, cardData.description);
+    },
     handleCardDelete: (evt) => {
-      const cardId = cardData._id;
-      const cardElement = evt.target.closest(".element");
+      // колбек удаления карточки
       popupDeleteCardConfirm.open();
       popupDeleteCardConfirm.updateSubmit(() => {
-        api.deleteCard(cardId)
-        .then(() => {
-          cardElement.remove();
-          popupDeleteCardConfirm.close();
-        })
-      })
-
-
-
-    }
-
+        popupDeleteCardConfirm.setSubmitBtnText("Удаление...");
+        api
+          .deleteCard(cardData._id)
+          .then(() => {
+            evt.target.closest(".element").remove();
+          })
+          .finally(() => {
+            popupDeleteCardConfirm.close();
+            popupDeleteCardConfirm.setSubmitBtnText("Да");
+          });
+      });
+    },
+    handleLikeClick: () => {
+      // колбек лайка карточки
+      if (newCard.isLiked) {
+        api.removeLike(cardData._id).then((cardData) => {
+          newCard.removeLikeCard();
+          newCard.updLikesCounter(cardData.likes);
+        });
+      } else {
+        api.addLike(cardData._id).then((cardData) => {
+          newCard.addLikeCard();
+          newCard.updLikesCounter(cardData.likes);
+        });
+      }
+    },
   });
   return newCard.generateCard();
 }
 
-function handleCardClick(imgName, imgLink, imgDescription) {
-  // функция открытия попапа при клике по фото
-  popupShowImage.open(imgName, imgLink, imgDescription);
-}
-
-function handleCardDelete(event) {
-  // функция открытия попапа подтверждения удаления карточки
-  // console.log(event);
-  popupDeleteCardConfirm.open();
-  // api.deleteCard(cardId)
-  // .then(res => {
-  //   console.log("resDel =>",res)
-  // })
-  // event.target.closest(".element").remove();
-}
-
 /*------------------ наполнение страницы контентом ------------------*/
-// cardContainer.renderItems(initialCards);
-
-api.getAllData()
-.then((res) => {
-  const [initialCards, userData] = res;
-  // console.log("userData=>", userData)
-  // userInfo.setUserInfo({name: userData.name, about: userData.about, avatar: userData.avatar, userId: userData._id});
-  userInfo.setUserInfo({name: userData.name, about: userData.about, userId: userData._id});
-  userInfo.setUserAvatar({avatar: userData.avatar});
-  cardContainer.renderItems(initialCards);
-}).catch(err => console.error(err)
-);
-
-// api.getCards().then((res) => { // получение карточек с сервера и вставка их в страницу
-//   cardContainer.renderItems(res);
-//   console.log(res);
-// });
-
-// api.getUserInfo()
-//   .then((res) => { // получение имени и описания пользователя и вставка их в страницу
-//     // console.log("response =>", res);
-//     userInfo.setUserInfo({name: res.name, about: res.about});
-//     userInfo.setUserAvatar({avatar: res.avatar});
-//     // userInfo.setUserAvatar({avatar: res.avatar});
-//   });
-
+api
+  .getAllData()
+  .then((res) => {
+    const [initialCards, userData] = res;
+    userInfo.setUserInfo({
+      name: userData.name,
+      about: userData.about,
+      userId: userData._id,
+    });
+    userInfo.setUserAvatar({ avatar: userData.avatar });
+    cardContainer.renderItems(initialCards);
+  })
+  .catch((err) => console.error(err));
 
 /*------------------ валидация ------------------*/
 // добавление валидации на попап редактирования профиля
-const validatorPopupDescription = new FormValidator(
-  validationConfig,
-  popupDescription
-);
 validatorPopupDescription.enableValidation();
 
 // добавление валидации на попап добавления новой карточки
-const validatorPopupAdd = new FormValidator(validationConfig, popupAddCard);
 validatorPopupAdd.enableValidation();
 
 // добавление валидации на попап замены аватара
-const validatorPopupAvatar = new FormValidator(validationConfig, popupAvatar);
 validatorPopupAvatar.enableValidation();
 
 /*------------------ обработчики событий ------------------*/

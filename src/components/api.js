@@ -4,9 +4,6 @@ export default class Api {
     this._headers = headers;
   }
 
-  // TODO функция поставить лайк
-  // TODO функция удалить лайк
-
   _checkResponse(res) {
     // функция проверки статуса запроса с сервера
     return res.ok
@@ -23,9 +20,7 @@ export default class Api {
         headers: this._headers,
       })
         .then(this._checkResponse) // получение с сервера
-        // .then((result) => {
         //   // второй then нужен потому что res.json тоже асинхронный и его надо дождаться
-        // })
         .catch((err) => console.log(err))
     );
   }
@@ -41,7 +36,7 @@ export default class Api {
   }
 
   getAllData() {
-    // функция получения всех данных
+    // функция получения всех данных вместе
     return Promise.all([this.getCards(), this.getUserInfo()]);
   }
 
@@ -82,6 +77,27 @@ export default class Api {
       body: JSON.stringify({
         avatar: newAvatar.avatar,
       }),
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
+  }
+
+  /* -------------- функционал лайков ----------------*/
+  addLike(cardId) {
+    // функция отправки на сервер данных о том, что пользователь лайкнул карточку
+    return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    })
+      .then(this._checkResponse)
+      .catch((err) => console.log(err));
+  }
+
+  removeLike(cardId) {
+    // функция отправки на сервер данных о том, что пользователь отменил свой лайк
+    return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
     })
       .then(this._checkResponse)
       .catch((err) => console.log(err));

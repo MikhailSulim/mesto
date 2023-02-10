@@ -48,38 +48,22 @@ export default class Card {
   _setEventListeners() {
     // слушатели карточки
     // обработчик нажатия на кнопку лайка
-    this._likeBtn.addEventListener("click", () => {
-      this._likeBtn.classList.toggle("element__like_is-liked");
-    });
-// console.log(this._userId, this._cardOwner)
+    this._likeBtn.addEventListener("click", () => this._handleLikeClick());
+
+    // обработчик нажатия на кнопку удаления
     if (this._userId === this._cardOwner) {
-      this._deleteBtn.addEventListener("click", (evt) => this._handleCardDelete(evt));
+      this._deleteBtn.addEventListener("click", (event) =>
+        this._handleCardDelete(event)
+      );
     } else {
       this._deleteBtn.remove();
-
     }
-    // обработчик нажатия на кнопку удаления
-    // this._element.closest(".element").remove();
-
-    // if (!this._isUserCard) {
-    //   this._cardDelButton.remove();
-    //   this._cardDelButton = null;
-    // } else {
-    //   this._cardElement.querySelector('.card__del-button').addEventListener('click', (event) => {
-    //     this._handleRemoveButton(event);
-    //   });
-    // }
 
     // обработчик нажатия на фото для появления попапа с полноразмерной версией
     this._image.addEventListener("click", () => {
-      this._handleCardClick(this._name, this._link, this._description);
+      this._handleCardClick();
     });
   }
-
-  // deleteCard() {
-  //   // функция удаления карточки из браузера
-  //   this._element.closest(".element").remove();
-  // }
 
   generateCard() {
     // функция создания карточки
@@ -89,15 +73,42 @@ export default class Card {
     this._likeCountElement = this._element.querySelector(this._likeCount); // элемент вывода числа лайков
     this._image = this._element.querySelector(this._cardImgLinkSelector); // элемент изображения на карточке
 
-    this._element.querySelector(this._cardTitleSelector).textContent = this._name;
+    this._element.querySelector(this._cardTitleSelector).textContent =
+      this._name;
     this._likeCountElement.textContent = this._likes.length;
-
-
-
-    this._setEventListeners();
     this._image.src = this._link;
     this._image.alt = this._description;
 
+    this._likeDirection();
+    this._setEventListeners();
+
     return this._element;
+  }
+
+  addLikeCard() {
+    // функция поставить лайк - меняет вид кнопки
+    this._likeBtn.classList.add("element__like_is-liked");
+    this.isLiked = true;
+  }
+
+  removeLikeCard() {
+    // функция убрать лайк - меняет вид кнопки
+    this._likeBtn.classList.remove("element__like_is-liked");
+    this.isLiked = false;
+  }
+
+  _checkUserLike() {
+    // функция определения ставил пользователь лайк или нет
+    return this._likes.some((user) => user._id === this._userId);
+  }
+
+  _likeDirection() {
+    // функция для управления первноначальной установкой лайка при загрузке данных
+    this._checkUserLike() ? this.addLikeCard() : this.removeLikeCard();
+  }
+
+  updLikesCounter(cardData) {
+    // функция обновления числа лайков на элементе
+    this._likeCountElement.textContent = cardData.length;
   }
 }

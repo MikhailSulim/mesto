@@ -14,22 +14,26 @@ export default class Popup {
   }
 
   open() {
+    // функция открытия модального окна
     this._popup.classList.add("popup_is-opened");
     document.addEventListener("keydown", this._handleEscClose);
   }
 
   close() {
+    // функция закрытия модального окна
     this._popup.classList.remove("popup_is-opened");
     document.removeEventListener("keydown", this._handleEscClose);
   }
 
   _handleEscClose(event) {
+    // функция закрытия модального окна при нажатии кнопки Esc
     if (event.key === "Escape") {
       this.close();
     }
   }
 
   setEventListeners() {
+    // слушатели
     this._popupCloseBtn.addEventListener("click", () => {
       this.close();
     });
