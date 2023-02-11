@@ -60,7 +60,7 @@ const popupUserProfile = new PopupWithForm(popupDescription, (userValue) => {
   popupUserProfile.setSubmitBtnText("Сохранение...");
   api
     .setUserInfo(userValue)
-    .then((res) => {
+    .then(() => {
       userInfo.setUserInfo(userValue);
     })
     .finally(() => {
@@ -72,7 +72,7 @@ const popupNewAvatar = new PopupWithForm(popupAvatar, (userValue) => {
   popupNewAvatar.setSubmitBtnText("Сохранение...");
   api
     .setUserAvatar(userValue)
-    .then((res) => {
+    .then(() => {
       userInfo.setUserAvatar(userValue);
     })
     .finally(() => {

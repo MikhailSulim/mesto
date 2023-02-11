@@ -15,7 +15,7 @@ export default class UserInfo {
     this._avatarElement = avatarElement;
   }
 
-  setUserInfo({ name, about, avatar, userId }) {
+  setUserInfo({ name, about, userId }) {
     // метод получения новых данных профиля - вставляет их в элементы на странице
     this._profileNameElement.textContent = name;
     this._profileSubtitleElement.textContent = about;
