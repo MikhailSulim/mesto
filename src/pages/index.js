@@ -1,5 +1,5 @@
 // импорт констант и классов
-import Api from "../components/api.js";
+import Api from "../components/Api.js";
 import { cohort, token } from "./../utils/authorizationConfig.js";
 import {
   validationConfig,
