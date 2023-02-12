@@ -6,19 +6,22 @@ import {
   cardTemplate,
   cardConfig,
   popupDescription,
+  popupDescriptionSelector,
   popupOpenDescriptionBtn,
   popupFieldName,
   docNameElement,
   popupFieldSubtitle,
   docSubtitleElement,
   popupAddCard,
+  popupAddCardSelector,
   popupOpenAddCardBtn,
-  popupImage,
+  popupImageSelector,
   cardElements,
+  popupAvatarSelector,
   popupAvatar,
   popupOpenAvatarBtn,
   avatarImg,
-  popupDelConfirm,
+  popupDelConfirmSelector,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -43,44 +46,47 @@ const cardContainer = new Section(createNewCard, cardElements);
 const userInfo = new UserInfo(docNameElement, docSubtitleElement, avatarImg);
 
 // классы попапов
-const popupShowImage = new PopupWithImage(popupImage);
-const popupAddNewCard = new PopupWithForm(popupAddCard, (newCardData) => {
+const popupShowImage = new PopupWithImage(popupImageSelector);
+const popupAddNewCard = new PopupWithForm(popupAddCardSelector, (newCardData) => {
   popupAddNewCard.setSubmitBtnText("Сохранение...");
   api
     .createCard(newCardData)
     .then((newCardData) => {
       cardContainer.addItem(createNewCard(newCardData), "prepend");
+      popupAddNewCard.close();
     })
+    .catch((err) => console.log(err))
     .finally(() => {
       popupAddNewCard.setSubmitBtnText("Создать");
-      popupAddNewCard.close();
     });
 });
-const popupUserProfile = new PopupWithForm(popupDescription, (userValue) => {
+const popupUserProfile = new PopupWithForm(popupDescriptionSelector, (userValue) => {
   popupUserProfile.setSubmitBtnText("Сохранение...");
   api
     .setUserInfo(userValue)
-    .then(() => {
-      userInfo.setUserInfo(userValue);
-    })
-    .finally(() => {
+    .then((res) => {
+      userInfo.setUserInfo(res);
       popupUserProfile.close();
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
       popupUserProfile.setSubmitBtnText("Сохранить");
     });
 });
-const popupNewAvatar = new PopupWithForm(popupAvatar, (userValue) => {
+const popupNewAvatar = new PopupWithForm(popupAvatarSelector, (userValue) => {
   popupNewAvatar.setSubmitBtnText("Сохранение...");
   api
     .setUserAvatar(userValue)
-    .then(() => {
-      userInfo.setUserAvatar(userValue);
-    })
-    .finally(() => {
+    .then((res) => {
+      userInfo.setUserAvatar(res);
       popupNewAvatar.close();
+    })
+    .catch((err) => console.log(err))
+    .finally(() => {
       popupNewAvatar.setSubmitBtnText("Сохранить");
     });
 });
-const popupDeleteCardConfirm = new PopupWithConfirmation(popupDelConfirm);
+const popupDeleteCardConfirm = new PopupWithConfirmation(popupDelConfirmSelector);
 
 // классы валидации
 const validatorPopupDescription = new FormValidator(validationConfig, popupDescription);
@@ -102,7 +108,7 @@ function createNewCard(cardData) {
       // колбек открытия попапа при клике по фото
       popupShowImage.open(cardData.name, cardData.link, cardData.description);
     },
-    handleCardDelete: (evt) => {
+    handleCardDelete: () => {
       // колбек удаления карточки
       popupDeleteCardConfirm.open();
       popupDeleteCardConfirm.updateSubmit(() => {
@@ -110,10 +116,11 @@ function createNewCard(cardData) {
         api
           .deleteCard(cardData._id)
           .then(() => {
-            evt.target.closest(".element").remove();
-          })
-          .finally(() => {
+            newCard.deleteCard();
             popupDeleteCardConfirm.close();
+          })
+          .catch((err) => console.log(err))
+          .finally(() => {
             popupDeleteCardConfirm.setSubmitBtnText("Да");
           });
       });
@@ -124,12 +131,14 @@ function createNewCard(cardData) {
         api.removeLike(cardData._id).then((cardData) => {
           newCard.removeLikeCard();
           newCard.updLikesCounter(cardData.likes);
-        });
+        })
+        .catch((err) => console.log(err));
       } else {
         api.addLike(cardData._id).then((cardData) => {
           newCard.addLikeCard();
           newCard.updLikesCounter(cardData.likes);
-        });
+        })
+        .catch((err) => console.log(err));
       }
     },
   });

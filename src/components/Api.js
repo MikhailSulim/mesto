@@ -14,15 +14,11 @@ export default class Api {
   /* ----------- получение данных с сервера --------------- */
   getCards() {
     // функция получения массива данных карточек с сервера
-    return (
-      fetch(`${this._serverUrl}/cards`, {
-        method: "GET",
-        headers: this._headers,
-      })
-        .then(this._checkResponse) // получение с сервера
-        //   // второй then нужен потому что res.json тоже асинхронный и его надо дождаться
-        .catch((err) => console.log(err))
-    );
+    return fetch(`${this._serverUrl}/cards`, {
+      method: "GET",
+      headers: this._headers,
+    }).then(this._checkResponse); // получение с сервера
+    // второй then нужен потому что res.json тоже асинхронный и его надо дождаться
   }
 
   getUserInfo() {
@@ -30,9 +26,7 @@ export default class Api {
     return fetch(`${this._serverUrl}/users/me`, {
       method: "GET",
       headers: this._headers,
-    })
-      .then(this._checkResponse)
-      .catch((err) => console.log(err));
+    }).then(this._checkResponse);
   }
 
   getAllData() {
@@ -50,9 +44,7 @@ export default class Api {
         name: place.name,
         link: place.link,
       }),
-    })
-      .then(this._checkResponse)
-      .catch((err) => console.log(err));
+    }).then(this._checkResponse);
   }
 
   setUserInfo(userData) {
@@ -64,9 +56,7 @@ export default class Api {
         name: userData.name,
         about: userData.about,
       }),
-    })
-      .then(this._checkResponse)
-      .catch((err) => console.log(err));
+    }).then(this._checkResponse);
   }
 
   setUserAvatar(newAvatar) {
@@ -77,9 +67,7 @@ export default class Api {
       body: JSON.stringify({
         avatar: newAvatar.avatar,
       }),
-    })
-      .then(this._checkResponse)
-      .catch((err) => console.log(err));
+    }).then(this._checkResponse);
   }
 
   /* -------------- функционал лайков ----------------*/
@@ -88,9 +76,7 @@ export default class Api {
     return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
       method: "PUT",
       headers: this._headers,
-    })
-      .then(this._checkResponse)
-      .catch((err) => console.log(err));
+    }).then(this._checkResponse);
   }
 
   removeLike(cardId) {
@@ -98,9 +84,7 @@ export default class Api {
     return fetch(`${this._serverUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then(this._checkResponse)
-      .catch((err) => console.log(err));
+    }).then(this._checkResponse);
   }
 
   /* -------------- удаление данных на сервере -------------*/
@@ -109,8 +93,6 @@ export default class Api {
     return fetch(`${this._serverUrl}/cards/${cardId}`, {
       method: "DELETE",
       headers: this._headers,
-    })
-      .then(this._checkResponse)
-      .catch((err) => console.log(err));
+    }).then(this._checkResponse);
   }
 }

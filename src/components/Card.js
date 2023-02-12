@@ -51,13 +51,7 @@ export default class Card {
     this._likeBtn.addEventListener("click", () => this._handleLikeClick());
 
     // обработчик нажатия на кнопку удаления
-    if (this._userId === this._cardOwner) {
-      this._deleteBtn.addEventListener("click", (event) =>
-        this._handleCardDelete(event)
-      );
-    } else {
-      this._deleteBtn.remove();
-    }
+    this._deleteBtn.addEventListener("click", () => this._handleCardDelete());
 
     // обработчик нажатия на фото для появления попапа с полноразмерной версией
     this._image.addEventListener("click", () => {
@@ -80,9 +74,22 @@ export default class Card {
     this._image.alt = this._description;
 
     this._likeDirection();
+    this._delBtnDirection();
     this._setEventListeners();
 
     return this._element;
+  }
+
+  deleteCard() {
+    // функция удаления карточки
+    this._element.closest(".element").remove();
+  }
+
+  _delBtnDirection() {
+    // функция управления отображением кнопки удаления карточки
+    if (this._userId != this._cardOwner) {
+      this._deleteBtn.remove();
+    }
   }
 
   addLikeCard() {

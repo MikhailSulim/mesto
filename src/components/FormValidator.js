@@ -42,10 +42,10 @@ export default class FormValidator {
   clearErrors() {
     // функция очистки ошибок валидации в случае, если попап был закрыт без сохранения
     this._formInputs.forEach((input) => {
-      this._errors.forEach((error) => {
-        this._hideInputErrors(input, error);
-      });
+      const error = this._formElement.querySelector(`#${input.id}-error`);
+      this._hideInputErrors(input, error);
     });
+    // });
 
     this._disableSubmitBtn();
   }
